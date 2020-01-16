@@ -1,6 +1,6 @@
 class Particle {
   PVector pos = new PVector(sceneW/2, height/2);
-  Ray[] rays = new Ray[range];
+  Ray[] rays = new Ray[360];
   float heading = 0;
 
   Particle() {
@@ -11,13 +11,13 @@ class Particle {
 
   void rot(float angle){
     heading += angle;
-    for (int i=-rays.length/2; i<rays.length/2; i++) {
-      rays[i+rays.length/2].setAngle(radians(i) + heading); 
+    for (int i=-range/2; i<range/2; i++) {
+      rays[i+range/2].setAngle(radians(i) + heading); 
     }
   }
 
   void show() {
-    for (int i=0; i<rays.length; i++) {
+    for (int i=0; i<range; i++) {
       rays[i].show();
     }
     fill(200);
@@ -31,7 +31,7 @@ class Particle {
 
   float[] look(Boundary[] b) {
     float[] s = new float[range];
-    for (int i=0; i<rays.length; i++) {
+    for (int i=0; i<range; i++) {
       float record = 100000000;
       PVector closest = null;
       for (int v =0; v<walls.length; v++) {

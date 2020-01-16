@@ -4,7 +4,7 @@ Particle p;
 float sceneW = 400;
 int wallCount = 4;
 int amt = 5+wallCount;
-int range = 45;
+int range = 46;
 
 Boundary[] walls = new Boundary[amt];
 float[] scene = new float[range];
@@ -61,9 +61,20 @@ void draw() {
   // ellipse(pt.x, pt.y, 8, 8);
   //}
 }
-
+boolean down = false;
 void mouseWheel(MouseEvent event) {
   float e = event.getCount();
-  e /= 10;
-  p.rot(e);
+  if(down && ((e<0 && range>=1) || (e>0 && range <=358))){
+    range+=2*e;
+    p.rot(0);
+  }
+  else
+    p.rot(e/10);
+}
+
+void mousePressed(){
+  down=true; 
+}
+void mouseReleased(){
+  down = false;
 }
