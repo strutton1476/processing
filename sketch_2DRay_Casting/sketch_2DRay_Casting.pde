@@ -6,6 +6,7 @@ Particle p;
 
 void setup(){
   size(800, 800); 
+  noCursor();
   for(int i=0; i<amt-4; i++){
     PVector p1 = new PVector(random(width), random(height));
     PVector p2 = new PVector(random(width), random(height));
