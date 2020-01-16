@@ -28,16 +28,17 @@ class Particle {
     pos.x = mouseX;
     pos.y = mouseY;
   }
-
+  
   float[] look(Boundary[] b) {
     float[] s = new float[range];
     for (int i=0; i<range; i++) {
       float record = 100000000;
       PVector closest = null;
-      for (int v =0; v<walls.length; v++) {
+      for (int v =0; v<b.length; v++) {
 
-        PVector pt = rays[i].cast(walls[v]);
-
+        PVector pt = rays[i].cast(walls[v]);//debug???
+        
+        
         if (pt != null) {
           float d = PVector.dist(pos, pt);
           float a = rays[i].dir.heading() - heading;
@@ -57,4 +58,5 @@ class Particle {
     }
     return s;
   }
+  
 }

@@ -10,21 +10,30 @@ Boundary[] walls = new Boundary[amt];
 float[] scene = new float[range];
 
 void setup() {
+  
+  
   if(range%2 !=0)
     range++;
-  size(800, 400); 
-  for (int i=0; i<amt-wallCount; i++) {
+  size(800, 400);
+  
+  if(wallCount == 4){
+    walls[0] = new Boundary(sceneW, 0, sceneW, height, 0);
+    walls[1] = new Boundary(0, 0, sceneW, 0, 1);
+    walls[2] = new Boundary(0, 0, 0, height, 2);
+    walls[3] = new Boundary(0, height, sceneW, height, 3);
+  }
+  
+  for (int i=wallCount; i<amt; i++) {
     PVector p1 = new PVector(random(sceneW), random(height));
     PVector p2 = new PVector(random(sceneW), random(height));
-    walls[i] = new Boundary(p1.x, p1.y, p2.x, p2.y);
-  }
-  if(wallCount == 4){
-    walls[5] = new Boundary(sceneW, 0, sceneW, height);
-    walls[6] = new Boundary(0, 0, sceneW, 0);
-    walls[7] = new Boundary(0, 0, 0, height);
-    walls[8] = new Boundary(0, height, sceneW, height);
+    walls[i] = new Boundary(p1.x, p1.y, p2.x, p2.y, i);
+    
   }
   p = new Particle();
+  p.rot(0);
+  
+  
+  p.rays[180].debug = true;
 }
 void draw() {
   background(0);
@@ -70,6 +79,19 @@ void mouseWheel(MouseEvent event) {
   }
   else
     p.rot(e/10);
+}
+
+void keyPressed(){
+  if(key=='q'){
+    range=46;
+    p.rot(0);
+  }
+  if(key=='~'){
+    range=181;
+    p.rot(0);
+  }
+  
+    
 }
 
 void mousePressed(){
