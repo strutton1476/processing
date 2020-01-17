@@ -24,9 +24,14 @@ class Particle {
     ellipse(pos.x, pos.y, 8, 8);
   }
 
+  PVector last = new PVector();
   void update() {
-    pos.x = mouseX;
-    pos.y = mouseY;
+    
+    if(!console.open)
+      last = new PVector(mouseX, mouseY);
+      
+    pos.x = last.x;
+    pos.y = last.y;
   }
   
   float[] look(Boundary[] b) {
