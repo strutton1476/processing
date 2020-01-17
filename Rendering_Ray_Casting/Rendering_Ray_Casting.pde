@@ -1,5 +1,6 @@
 Ray ray;
 Particle p;
+Console console = new Console();
 
 float sceneW = 400;
 int wallCount = 4;
@@ -31,12 +32,11 @@ void setup() {
   }
   p = new Particle();
   p.rot(0);
-  
-  
-  p.rays[180].debug = true;
 }
 void draw() {
   background(0);
+  
+  
   for (int i=0; i<amt; i++) {
     walls[i].show();
   }
@@ -69,11 +69,13 @@ void draw() {
   // fill(255);
   // ellipse(pt.x, pt.y, 8, 8);
   //}
+  console.show();
 }
+
 boolean down = false;
 void mouseWheel(MouseEvent event) {
   float e = event.getCount();
-  if(down && ((e<0 && range>=1) || (e>0 && range <=358))){
+  if(down && ((e<0 && range+(2*e) >= 1) || (e>0 && range+(2*e) <= 360))){
     range+=2*e;
     p.rot(0);
   }
@@ -87,7 +89,10 @@ void keyPressed(){
     p.rot(0);
   }
   if(key=='~'){
-    range=181;
+    console.toggle();
+  }
+  if(key=='0'){
+    range=2;
     p.rot(0);
   }
   

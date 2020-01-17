@@ -41,8 +41,8 @@ class Particle {
         
         if (pt != null) {
           float d = PVector.dist(pos, pt);
-          float a = rays[i].dir.heading() - heading;
-          d*=cos(a);
+          //float a = rays[i].dir.heading() - heading;
+          //d*=cos(a);
           
           if (d<record) {
             record = d;

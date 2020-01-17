@@ -53,7 +53,8 @@ class Ray{
     }
     
     if(t>0 && t<1 && u>0){
-      //PVector pt = new PVector(x1+t*(x2-x1), y1+t*(y2-y1));
+      if(debug)
+        println("pass with id:", b.id);
       PVector pt = new PVector(p1.x+t* (p2.x-p1.x), p1.y+t*(p2.y-p1.y));
       return pt; 
     }
