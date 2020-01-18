@@ -1,15 +1,20 @@
 class Network{
   int InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes;
-  Neuron[] Inputs, Hiddens[], Outputs;
-  float[] weights;
   int weightsCount =0;
   
-  Network(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_){
+  Neuron[] Inputs, Hiddens[], Outputs;
+  
+  float[] weights;
+  float fitness = 0;
+  
+  
+  Network(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_, float[] weights_){
+     
     InputNodes = InputNodes_;
     HiddenXNodes = HiddenXNodes_;
     HiddenYNodes = HiddenYNodes_;
     OutputNodes = OutputNodes_;
-    weights = new float[OutputNodes*HiddenYNodes + HiddenYNodes*HiddenXNodes + HiddenYNodes*InputNodes];
+    weights = weights_;
     
     Inputs = new  Neuron[InputNodes];
     Hiddens = new Neuron[HiddenXNodes][HiddenYNodes];//bug??
@@ -50,41 +55,45 @@ class Network{
       
       Outputs[i].addDendrite(Hiddens[HiddenXNodes-1], w);
     }
+    
+    
   }
   
   public float[] feedForward(float[] Inputs_){
+    float[] Result = new float[Outputs.length];
+    
     if(Inputs.length != Inputs_.length){
       println("inputs must have the same length");
+      return Result;
     }
+    
     for(int i=0; i<Inputs_.length; i++){
-      
       Inputs[i].axonValue = Inputs_[i];
     }
     for(int i=0; i<HiddenXNodes; i++){
       for(int j=0; j<HiddenYNodes; j++){
         Hiddens[i][j].process();
-        println(Hiddens[0][0].axonValue);
       } 
     }
     for(int i=0; i<Outputs.length; i++){
       Outputs[i].process(); 
     }
-    float[] Result = new float[Outputs.length];
     for(int i=0; i<Result.length; i++){
       Result[i] = Outputs[i].axonValue;
     }
+    
     return Result;
   }
   
   PrintWriter inputLog, hiddenLog, outputLog;
   public void save(){
-     inputLog = createWriter( "Inputs.txt");
+    inputLog = createWriter( "Inputs.txt");
     hiddenLog = createWriter("Hiddens.txt");
     outputLog = createWriter("Outputs.txt");
-     inputLog.println( Inputs);
-    hiddenLog.println(Hiddens);
-    outputLog.println(Outputs);
-     inputLog.flush();
+    inputLog.println(Inputs.toString());
+    hiddenLog.println(Hiddens.toString());
+    outputLog.println(Outputs.toString());
+    inputLog.flush();
     hiddenLog.flush();
     outputLog.flush();
   }
