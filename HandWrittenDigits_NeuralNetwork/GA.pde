@@ -12,29 +12,26 @@ class GA {
   private int HiddenYNodes = InputNodes;
   private int OutputNodes = 10;
 
-  GA() {
+  GA(boolean loading) {
     // 1,237,152 weights
     //float[] weights = new float[OutputNodes * HiddenYNodes + (HiddenXNodes-1)*HiddenYNodes*HiddenXNodes + InputNodes*HiddenYNodes];
     float[] weights = new float[OutputNodes*HiddenYNodes + (HiddenXNodes-1)*HiddenYNodes*HiddenYNodes + HiddenYNodes*InputNodes];
-    
-    for (int i=0; i<10; i++) {
-      for (int j=0; j<weights.length; j++) {
-        weights[j] = random(-1, 1);
+    if(!loading){
+      for (int i=0; i<10; i++) {
+        for (int j=0; j<weights.length; j++) {
+          weights[j] = random(-1, 1);
+        }
+        
+        nets[i] = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
+        nets[i].feedForward(float(td.getCurrentPixs()));
+        grade(nets[i]);
       }
-
-      nets[i] = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
-      nets[i].feedForward(float(td.getCurrentPixs()));
-      grade(nets[i]);
-      
     }
-  
-
-    float[] o = new float[10];
-
-    for (int i=0; i<10; i++) {
-      o[i] = 1;
+    else{
+      nets[0] = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights.length);
+      nets[0].feedForward(float(td.getCurrentPixs()));
+      grade(nets[0]);
     }
-    
   }
 
   void grade(Network net_) {

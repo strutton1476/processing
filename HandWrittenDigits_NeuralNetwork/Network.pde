@@ -7,8 +7,15 @@ class Network{
   float[] weights;
   float fitness = 0;
   
+  Network(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_, int weightCount){
+    init(InputNodes_, HiddenXNodes_, HiddenYNodes_, OutputNodes_, loadWeights(weightCount));
+  }
   
   Network(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_, float[] weights_){
+    init(InputNodes_, HiddenXNodes_, HiddenYNodes_, OutputNodes_, weights_);
+  }
+  
+  private void init(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_, float[] weights_){
      
     InputNodes = InputNodes_;
     HiddenXNodes = HiddenXNodes_;
@@ -56,7 +63,6 @@ class Network{
       Outputs[i].addDendrite(Hiddens[HiddenXNodes-1], w);
     }
     
-    
   }
   
   public float[] feedForward(float[] Inputs_){
@@ -85,20 +91,55 @@ class Network{
     return Result;
   }
   
-  PrintWriter inputLog, hiddenLog, outputLog;
-  public void save(){
-    inputLog = createWriter( "Inputs.txt");
+  
+  public void saveWeights(){
+    PrintWriter hiddenLog, outputLog;
+    
     hiddenLog = createWriter("Hiddens.txt");
     outputLog = createWriter("Outputs.txt");
-    inputLog.println(Inputs.toString());
-    hiddenLog.println(Hiddens.toString());
-    outputLog.println(Outputs.toString());
-    inputLog.flush();
-    hiddenLog.flush();
+    
+    for(int i=0; i<Hiddens.length; i++){
+      for(int j=0; j<Hiddens[i].length; j++){
+        for(int k=0; k<Hiddens[i][j].weights[k]; k++){
+          hiddenLog.println(Hiddens[i][j].weights[j]);
+          println(Hiddens[i][j].weights[k]);
+        }
+      }
+    }
+    hiddenLog.flush(); 
+    
+    for(int i=0; i<Outputs.length; i++){
+      for(int j=0; j<Outputs[i].weights.length; j++){
+        outputLog.println(Outputs[i].weights[j]);
+      }
+    }
     outputLog.flush();
   }
   
-  public void load(){
-     
+  
+  public float[] loadWeights(int weightCount){
+    BufferedReader hiddenLog = createReader("Hiddens.txt");
+    BufferedReader outputLog = createReader("Outputs.txt");
+    float[] weights_ = new float[weightCount];
+    
+    String line = null;
+    int i=0;
+    
+    try {
+      while ((line = hiddenLog.readLine()) != null) {
+        weights_[i] = float(line);
+      }
+      hiddenLog.close();
+      
+      while((line = outputLog.readLine()) != null){
+        weights_[i] = float(line);
+      }
+      outputLog.close();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    return weights_;
   }
 }

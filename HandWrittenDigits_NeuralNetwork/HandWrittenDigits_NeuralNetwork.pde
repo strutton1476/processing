@@ -9,8 +9,7 @@ void settings() {
 
 void setup() {
   td = new trainingData(); //59,999 digits
-  ga = new GA();
-  
+  ga = new GA(false);
   
   //noStroke();  
   //textAlign(CENTER, CENTER);
