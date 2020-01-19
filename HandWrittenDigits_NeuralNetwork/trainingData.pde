@@ -41,6 +41,10 @@ class trainingData{
    return float(expected);
   }
   
+  public int getCurrentnum(){
+    return int(labelSet[current +8]); 
+  }
+  
   void display(){
     for(int i=0; i<28; i++){
       for(int j=0; j<28; j++){

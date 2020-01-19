@@ -52,5 +52,18 @@ class GA {
     
     net_.fitness = map(avrerror, 0, 1, 1, 0);
     
+    float smallest = 10;
+    int index = 0;
+    for(int i=0; i<errors.length; i++){
+      if(errors[i] < smallest){
+        smallest = errors[i];
+        index = i;
+      }
+      
+      if(index == td.getCurrentnum())
+        net_.fitness*=2;
+        
+    }
+    
   }
 }

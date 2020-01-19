@@ -8,10 +8,9 @@ void settings() {
 }
 
 void setup() {
-  td = new trainingData();
+  td = new trainingData(); //59,999 digits
   ga = new GA();
   
-  //println(td.getCount(),"digits avaliable");
   
   //noStroke();  
   //textAlign(CENTER, CENTER);
