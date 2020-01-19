@@ -10,10 +10,6 @@ void settings() {
 void setup() {
   td = new trainingData(); //59,999 digits
   ga = new GA(false);
-  
-  //noStroke();  
-  //textAlign(CENTER, CENTER);
-  //textSize(30);
 }
 
 void draw() {
@@ -21,6 +17,5 @@ void draw() {
 }
 
 void mousePressed(){
-  //td.count++;
   td.nextNum();
 }

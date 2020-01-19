@@ -15,7 +15,7 @@ class trainingData{
   }
   
   public int getCount(){
-    return (trainSet.length-45)/784; 
+    return (trainSet.length-45)/784;
   }
   
   public int[] getCurrentPixs(){
@@ -48,13 +48,15 @@ class trainingData{
   void display(){
     for(int i=0; i<28; i++){
       for(int j=0; j<28; j++){
-        //noStroke();
         fill(getCurrentPixs()[i*28 +j]); //the first 16 bits are meta data
-        rect(cellSize*j, cellSize*i, cellSize, cellSize); 
+        rect(cellSize*j, cellSize*i, cellSize, cellSize);
       }
     }
-    
     fill(255, 0, 0);
+    
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(30);
     text(int(labelSet[current +8]), 30, 30); //the first 8 bits are meta data
   }
   

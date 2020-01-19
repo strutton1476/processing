@@ -63,6 +63,5 @@ class GA {
         net_.fitness*=2;
         
     }
-    
   }
 }
