@@ -1,17 +1,28 @@
 class trainingData{
   byte[] trainSet, labelSet;
   public int count =0;
-
+  int current;
+  
   trainingData(){
     trainSet = loadBytes("train-images.idx3-ubyte");
     labelSet = loadBytes("train-labels.idx1-ubyte");
+  
+    nextNum();
+  }
+  
+  public void nextNum(){
+    current = int(random(getCount()));
+  }
+  
+  public int getCount(){
+    return (trainSet.length-45)/784; 
   }
   
   public int[] getCurrentPixs(){
     int[] pixs = new int[28*28];
     for (int i = 0; i < 28; i++) {
       for (int j = 0; j < 28; j++) {
-        pixs[i*28 +j] = int(trainSet[784*count+28*i+j +16]);
+        pixs[i*28 +j] = int(trainSet[784*current+28*i+j +16]);
       }
     }
     return pixs;
@@ -19,13 +30,13 @@ class trainingData{
   
   public float[] getCurrentExpected(){
    int[] expected = new int[10];
-   int current = int(labelSet[count +8]);
+   int currentnum = int(labelSet[current +8]);
    
    for(int i=0; i<expected.length; i++){
      expected[i] = 0; 
    }
    
-   expected[current] = 1;
+   expected[currentnum] = 1;
    
    return float(expected);
   }
@@ -40,7 +51,7 @@ class trainingData{
     }
     
     fill(255, 0, 0);
-    text(int(labelSet[count +8]), 30, 30); //the first 8 bits are meta data
+    text(int(labelSet[current +8]), 30, 30); //the first 8 bits are meta data
   }
   
 }

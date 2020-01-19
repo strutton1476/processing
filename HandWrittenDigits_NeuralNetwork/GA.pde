@@ -51,7 +51,6 @@ class GA {
     avrerror /= errors.length;
     
     net_.fitness = map(avrerror, 0, 1, 1, 0);
-    println(net_.fitness);
     
   }
 }

@@ -11,6 +11,8 @@ void setup() {
   td = new trainingData();
   ga = new GA();
   
+  //println(td.getCount(),"digits avaliable");
+  
   //noStroke();  
   //textAlign(CENTER, CENTER);
   //textSize(30);
@@ -21,5 +23,6 @@ void draw() {
 }
 
 void mousePressed(){
-  td.count++; 
+  //td.count++;
+  td.nextNum();
 }
