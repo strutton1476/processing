@@ -28,6 +28,8 @@ class GA {
       }
     }
     else{
+      nets = new Network[1];
+      
       nets[0] = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights.length);
       nets[0].feedForward(float(td.getCurrentPixs()));
       grade(nets[0]);
