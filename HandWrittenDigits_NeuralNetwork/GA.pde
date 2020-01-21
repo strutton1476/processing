@@ -25,6 +25,11 @@ class GA {
         nets[i] = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
         nets[i].feedForward(float(td.getCurrentPixs()));
         grade(nets[i]);
+        
+        if(nets[i].fitness < bestfitness){
+          bestfitness = nets[i].fitness;
+          bestNetwork = nets[i];
+        }
       }
     }
     else{
@@ -34,6 +39,16 @@ class GA {
       nets[0].feedForward(float(td.getCurrentPixs()));
       grade(nets[0]);
     }
+  }
+  
+  void breed(){
+    Network childNetwork = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
+    Network Mate = random(nets);
+    
+    int index1 = (int)random(Mate.weights.length);
+    int index2 = (int)random(Mate.weights.length);
+    
+    
   }
 
   void grade(Network net_) {
