@@ -10,12 +10,17 @@ class trainingData{
     nextNum();
   }
   
+  
   public void nextNum(){
     current = int(random(getCount()));
   }
   
   public int getCount(){
     return (trainSet.length-45)/784;
+  }
+  
+  public int getCurrentnum(){
+    return int(labelSet[current +8]); 
   }
   
   public int[] getCurrentPixs(){
@@ -39,10 +44,6 @@ class trainingData{
    expected[currentnum] = 1;
    
    return float(expected);
-  }
-  
-  public int getCurrentnum(){
-    return int(labelSet[current +8]); 
   }
   
   void display(){
