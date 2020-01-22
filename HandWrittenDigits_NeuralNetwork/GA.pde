@@ -42,11 +42,11 @@ class GA {
   }
   
   void breed(){
-    Network childNetwork = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
-    Network Mate = random(nets);
+    Network child;
+    Network Mate = nets[(int)random(nets.length)];
     
-    int index1 = (int)random(Mate.weights.length);
-    int index2 = (int)random(Mate.weights.length);
+    
+    
     
     
   }
