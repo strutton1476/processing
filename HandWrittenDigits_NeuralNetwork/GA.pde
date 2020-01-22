@@ -42,13 +42,25 @@ class GA {
   }
   
   void breed(){
-    Network child;
-    Network Mate = nets[(int)random(nets.length)];
+    Network child = bestNetwork;
+    Network parent1 = nets[(int)random(nets.length)];
     
-    
-    
-    
-    
+    int chance = random(1);
+    for(int i=0; i<parent1.length; i++){
+      if(chance>=0.5 && i<=parent1.length.floor){
+        child.weights[i] = bestNetwork.weights[i];
+      }
+      else if(chance>=0.5 && i>=parent1.length.floor){
+        child.weights[i] = bestNetwork.weights[i];
+      }
+      
+      if(chance<=0.5 && i<=parent1.length.floor){
+        child.weights[i] = bestNetwork.weights[i];
+      }
+      else if(chance<=0.5 && i>=parent1.length.floor){
+        child.weights[i] = bestNetwork.weights[i];
+      }
+    }
   }
 
   void grade(Network net_) {
