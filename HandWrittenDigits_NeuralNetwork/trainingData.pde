@@ -1,18 +1,32 @@
 class trainingData{
   byte[] trainSet, labelSet;
-  public int count =0;
+  private int[] indexs;
+  public int count = 0;
+  private int indexCount =0;
   int current;
   
   trainingData(){
     trainSet = loadBytes("train-images.idx3-ubyte");
     labelSet = loadBytes("train-labels.idx1-ubyte");
   
+    current = int(random(getCount()));
+    indexs = new int[getCount()];
+    
     nextNum();
   }
   
   
   public void nextNum(){
-    current = int(random(getCount()));
+    int index = int(random(getCount()));
+    
+    while(index==current){
+        index = int(random(getCount()));
+    }
+    
+    current = index;
+    
+    indexs[indexCount] = current;
+    indexCount++;
   }
   
   public int getCount(){
