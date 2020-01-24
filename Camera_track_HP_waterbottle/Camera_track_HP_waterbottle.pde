@@ -3,12 +3,18 @@ import processing.video.*;
 Capture cam;
 
 int c =2;
-int rd = 0;
-int gd = 0;
-int bd = 0;
-int th = 1;
 
-boolean bypass = true;
+int ra = 255;
+int ga = 255;
+int ba = 255;
+int rb = 0;
+int gb = 0;
+int bb = 0;
+
+int tha = 255;
+int thb = 0;
+
+boolean bypass = false;
 
 void setup() {
   //size(640, 480);
@@ -38,7 +44,7 @@ void draw() {
     for (int y=0; y<cam.height; y+=c) {
       int index = y*cam.width+x;
 
-      color expected = color(255, 0, 0);
+      color expected = color(0, 0, 255);
       color[] cols = cam.pixels;
       int current = cols[index];
 
@@ -46,7 +52,7 @@ void draw() {
       int g = (int)Math.abs(green(current) - green(expected));
       int b = (int)Math.abs(blue(current) - blue(expected));
 
-      if (index >= cam.width && index < cols.length-((c/2)*cam.width) && b>=bd && r>=rd && g>=gd) {
+      if (index >= cam.width && index < cols.length-((c/2)*cam.width) && b>=bb && r>=rb && g>=gb && r<=ra && g<=ga && b<=ba) {
         float[] topRGB = new float[3];
         float[] bottomRGB = new float[3];
         float[] rightRGB = new float[3];
@@ -77,14 +83,16 @@ void draw() {
         avrRGB[1] = (topRGB[1]+bottomRGB[1]+leftRGB[1]+rightRGB[1])/4;
         avrRGB[2] = (topRGB[2]+bottomRGB[2]+leftRGB[2]+rightRGB[2])/4;
 
-        //println(Math.abs(avrRGB[0]-r)+(avrRGB[1]-g)+(avrRGB[2]-b)/3);
-        if ((Math.abs(avrRGB[0]-r)+(avrRGB[1]-g)+(avrRGB[2]-b))/3 <=th || bypass == true) {
+
+        float val = (Math.abs(avrRGB[0]-r)+Math.abs(avrRGB[1]-g)+Math.abs(avrRGB[2]-b))/3;
+        if ((val <=tha && val>=thb) || bypass == true) {
           for (int x_=-c/2; x_<c/2; x_++) {
             for (int y_=-c/2; y_<c/2; y_++) {
               set(cam.width-x+x_, y+y_, current);
             }
           }
         }
+        
       }
     }
   }
@@ -93,8 +101,9 @@ void draw() {
   
   text("Bypass:"+bypass, 10, 20);
   text("c:"+c, 10, 40);
-  text(rd+" gd "+gd+" bd "+bd, 10, 60);
-  text("th "+th, 10, 80);
+  text("lower: rb "+rb+" gb "+gb+" bb "+bb, 10, 60);
+  text("upper: ra "+ra+" ga "+ga+" ba "+ba, 10, 80);
+  text("th "+tha+"/"+thb, 10, 100);
 }
 
 void keyPressed() {
@@ -109,24 +118,40 @@ void keyPressed() {
       bypass = true; 
   }
   
-  if(key=='w' && rd<255)
-    rd++;
-  else if(key=='s' && rd>0)
-    rd--;
+  if(key=='W' && ra<255)
+    ra++;
+  else if(key=='S' && ra>0)
+    ra--;
+  if(key=='E' && ga<255)
+    ga++;
+  else if(key=='D' && ga>0)
+    ga--;
+  if(key=='R' && ba<255)
+    ba++;
+  else if(key=='F' && ba>0)
+    ba--;
   
-  if(key=='e' && gd<255)
-    gd++;
-  else if(key=='d' && gd>0)
-    gd--;
+  if(key=='w' && rb<255)
+    rb++;
+  else if(key=='s' && rb>0)
+    rb--;
+  if(key=='e' && gb<255)
+    gb++;
+  else if(key=='d' && gb>0)
+    gb--;
+  if(key=='r' && bb<255)
+    bb++;
+  else if(key=='f' && bb>0)
+    bb--;
     
-  if(key=='r' && bd<255)
-    bd++;
-  else if(key=='f' && bd>0)
-    bd--;
   if(key=='t')
-    th++;
+    tha+=1;
   else if(key=='g')
-    th--;
+    tha-=1;
+  if(key=='T')
+    thb++;
+  else if(key=='G')
+    thb--;
   
 }
 
