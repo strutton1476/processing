@@ -3,6 +3,11 @@ import processing.video.*;
 Capture cam;
 
 int c =2;
+int rd = 0;
+int gd = 0;
+int bd = 0;
+int th = 1;
+
 boolean bypass = true;
 
 void setup() {
@@ -22,6 +27,7 @@ void setup() {
 
 void draw() {
   background(0);
+  
 
   if (cam.available()) {
     cam.read();
@@ -40,7 +46,7 @@ void draw() {
       int g = (int)Math.abs(green(current) - green(expected));
       int b = (int)Math.abs(blue(current) - blue(expected));
 
-      if (index >= cam.width && index < cols.length-((c/2)*cam.width) && b>=100 && r>=105 && g>=100) {
+      if (index >= cam.width && index < cols.length-((c/2)*cam.width) && b>=bd && r>=rd && g>=gd) {
         float[] topRGB = new float[3];
         float[] bottomRGB = new float[3];
         float[] rightRGB = new float[3];
@@ -71,9 +77,8 @@ void draw() {
         avrRGB[1] = (topRGB[1]+bottomRGB[1]+leftRGB[1]+rightRGB[1])/4;
         avrRGB[2] = (topRGB[2]+bottomRGB[2]+leftRGB[2]+rightRGB[2])/4;
 
-       int th = 100;
         //println(Math.abs(avrRGB[0]-r)+(avrRGB[1]-g)+(avrRGB[2]-b)/3);
-        if (Math.abs(avrRGB[0]-r)+(avrRGB[1]-g)+(avrRGB[2]-b)/3 <=th || bypass == true) {
+        if ((Math.abs(avrRGB[0]-r)+(avrRGB[1]-g)+(avrRGB[2]-b))/3 <=th || bypass == true) {
           for (int x_=-c/2; x_<c/2; x_++) {
             for (int y_=-c/2; y_<c/2; y_++) {
               set(cam.width-x+x_, y+y_, current);
@@ -83,18 +88,48 @@ void draw() {
       }
     }
   }
+  
+  fill(color(0, 255, 0));
+  
+  text("Bypass:"+bypass, 10, 20);
+  text("c:"+c, 10, 40);
+  text(rd+" gd "+gd+" bd "+bd, 10, 60);
+  text("th "+th, 10, 80);
 }
 
 void keyPressed() {
   if (key=='q')
     c+=2;
-  if (key=='a'&& c>2)
+  else if (key=='a'&& c>2)
     c-=2;
-}
-
-void mousePressed(){
+  if(key=='z'){
     if(bypass)
       bypass = false;
     else
       bypass = true; 
+  }
+  
+  if(key=='w' && rd<255)
+    rd++;
+  else if(key=='s' && rd>0)
+    rd--;
+  
+  if(key=='e' && gd<255)
+    gd++;
+  else if(key=='d' && gd>0)
+    gd--;
+    
+  if(key=='r' && bd<255)
+    bd++;
+  else if(key=='f' && bd>0)
+    bd--;
+  if(key=='t')
+    th++;
+  else if(key=='g')
+    th--;
+  
+}
+
+void mousePressed(){
+    
 }
