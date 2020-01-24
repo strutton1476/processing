@@ -3,7 +3,7 @@ import processing.video.*;
 Capture cam;
 
 int c =2;
-boolean bypass = false;
+boolean bypass = true;
 
 void setup() {
   //size(640, 480);
