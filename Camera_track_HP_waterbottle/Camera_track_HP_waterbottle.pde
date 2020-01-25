@@ -1,27 +1,30 @@
 import processing.video.*;
+import ipcapture.*;
 
-Capture cam;
+//Capture cam;
+IPCapture cam;
 
 int c =2;
 
-int ra = 255;
-int ga = 255;
+int ra = 90;
+int ga = 140;
 int ba = 255;
-int rb = 0;
-int gb = 0;
-int bb = 0;
+int rb = 15;
+int gb = 47;
+int bb = 78;
 
-int tha = 255;
+int tha = 50;
 int thb = 0;
 
 boolean bypass = false;
 
 void setup() {
-  //size(640, 480);
-  size(1280, 960);
+  size(640, 480);
+  //size(1280, 960);
 
-  cam = new Capture(this, Capture.list()[87]);
+  //cam = new Capture(this, Capture.list()[87]);
   //cam = new Capture(this, Capture.list()[1]);
+  cam = new IPCapture(this, "frcvision.local:8081/stream.jpg", "", "");
 
   //String[] list = cam.list();
 
@@ -35,10 +38,7 @@ void draw() {
   background(0);
   
 
-  if (cam.available()) {
-    cam.read();
-  }
-  //image(cam, 0, 0);
+  cam.read();
 
   for (int x=0; x<cam.width; x+=c) {
     for (int y=0; y<cam.height; y+=c) {
