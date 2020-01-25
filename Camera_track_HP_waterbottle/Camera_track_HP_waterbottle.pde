@@ -83,7 +83,6 @@ void draw() {
         avrRGB[1] = (topRGB[1]+bottomRGB[1]+leftRGB[1]+rightRGB[1])/4;
         avrRGB[2] = (topRGB[2]+bottomRGB[2]+leftRGB[2]+rightRGB[2])/4;
 
-
         float val = (Math.abs(avrRGB[0]-r)+Math.abs(avrRGB[1]-g)+Math.abs(avrRGB[2]-b))/3;
         if ((val <=tha && val>=thb) || bypass == true) {
           for (int x_=-c/2; x_<c/2; x_++) {
@@ -101,58 +100,43 @@ void draw() {
   
   text("Bypass:"+bypass, 10, 20);
   text("c:"+c, 10, 40);
-  text("lower: rb "+rb+" gb "+gb+" bb "+bb, 10, 60);
-  text("upper: ra "+ra+" ga "+ga+" ba "+ba, 10, 80);
-  text("th "+tha+"/"+thb, 10, 100);
+  text("upper: ra "+ra+" ga "+ga+" ba "+ba, 10, 60);
+  text("lower: rb "+rb+" gb "+gb+" bb "+bb, 10, 80);
+  text("th "+tha+" / "+thb, 10, 100);
+}
+
+void mouseWheel(MouseEvent event) {
+  int t = -event.getCount();
+  
+  //println((ra<255 && t>0) rb>0 && t<0));
+  
+  if(key=='q' && ((ra<255 && t>0) || (ra>0 && t<0)))
+    ra+=t; 
+  else if(key=='a' && ((rb<255 && t>0) || (rb>0 && t<0)))
+    rb+=t;
+  else if(key=='w' && ((ga<255 && t>0) || (ga>0 && t<0)))
+    ga+=t;
+  else if(key=='s' && ((gb<255 && t>0) || (gb>0 && t<0)))
+    gb+=t;
+  else if(key=='e' && ((ba<255 && t>0) || (ba>0 && t<0)))
+    ba+=t;
+  else if(key=='d' && ((bb<255 && t>0) || (bb>0 && t<0)))
+    bb+=t;
+  else if(key=='r' && ((tha<255 && t>0) || (tha>0 && t<0)))
+    tha+=t;
+  else if(key=='f' && ((thb<255 && t>0) || (thb>0 && t<0)))
+    thb+=t;
+  else if (key=='x' && ((c>2 && t<0) || t>0))
+    c+=2*t;
 }
 
 void keyPressed() {
-  if (key=='q')
-    c+=2;
-  else if (key=='a'&& c>2)
-    c-=2;
   if(key=='z'){
     if(bypass)
       bypass = false;
     else
       bypass = true; 
   }
-  
-  if(key=='W' && ra<255)
-    ra++;
-  else if(key=='S' && ra>0)
-    ra--;
-  if(key=='E' && ga<255)
-    ga++;
-  else if(key=='D' && ga>0)
-    ga--;
-  if(key=='R' && ba<255)
-    ba++;
-  else if(key=='F' && ba>0)
-    ba--;
-  
-  if(key=='w' && rb<255)
-    rb++;
-  else if(key=='s' && rb>0)
-    rb--;
-  if(key=='e' && gb<255)
-    gb++;
-  else if(key=='d' && gb>0)
-    gb--;
-  if(key=='r' && bb<255)
-    bb++;
-  else if(key=='f' && bb>0)
-    bb--;
-    
-  if(key=='t')
-    tha+=1;
-  else if(key=='g')
-    tha-=1;
-  if(key=='T')
-    thb++;
-  else if(key=='G')
-    thb--;
-  
 }
 
 void mousePressed(){
