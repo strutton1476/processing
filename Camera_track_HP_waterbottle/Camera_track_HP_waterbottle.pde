@@ -1,20 +1,23 @@
 import processing.video.*;
 import ipcapture.*;
 
-//Capture cam;
-IPCapture cam;
+Capture cam;
+//IPCapture cam;
 
 int c =2;
 
-int ra = 90;
-int ga = 140;
-int ba = 255;
-int rb = 15;
-int gb = 47;
-int bb = 78;
+//255
+int ra = 80;
+int ga = 200;
+int ba = 200;
+int tha = 14;
 
-int tha = 50;
+//0
+int rb = 22;
+int gb = 0;
+int bb = 0;
 int thb = 0;
+
 
 boolean bypass = false;
 
@@ -23,8 +26,8 @@ void setup() {
   //size(1280, 960);
 
   //cam = new Capture(this, Capture.list()[87]);
-  //cam = new Capture(this, Capture.list()[1]);
-  cam = new IPCapture(this, "frcvision.local:8081/stream.jpg", "", "");
+  cam = new Capture(this, Capture.list()[1]);
+  //cam = new IPCapture(this, "frcvision.local:8081/stream.jpg", "", "");
 
   //String[] list = cam.list();
 
@@ -37,8 +40,8 @@ void setup() {
 void draw() {
   background(0);
   
-
-  cam.read();
+  if (cam.available())
+    cam.read();
 
   for (int x=0; x<cam.width; x+=c) {
     for (int y=0; y<cam.height; y+=c) {
@@ -84,7 +87,7 @@ void draw() {
         avrRGB[2] = (topRGB[2]+bottomRGB[2]+leftRGB[2]+rightRGB[2])/4;
 
         float val = (Math.abs(avrRGB[0]-r)+Math.abs(avrRGB[1]-g)+Math.abs(avrRGB[2]-b))/3;
-        if ((val <=tha && val>=thb) || bypass == true) {
+        if ((val <=tha && val>=thb) || bypass) {
           for (int x_=-c/2; x_<c/2; x_++) {
             for (int y_=-c/2; y_<c/2; y_++) {
               set(cam.width-x+x_, y+y_, current);
@@ -137,8 +140,4 @@ void keyPressed() {
     else
       bypass = true; 
   }
-}
-
-void mousePressed(){
-    
 }
