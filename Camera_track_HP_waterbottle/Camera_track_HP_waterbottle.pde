@@ -1,33 +1,34 @@
 import processing.video.*;
 import ipcapture.*;
 
-Capture cam;
-//IPCapture cam;
+//Capture cam;
+IPCapture cam;
 
-int c =2;
+int c = 0;
 
 //255
-int ra = 80;
-int ga = 200;
-int ba = 200;
-int tha = 14;
+int ra = 255;
+int ga = 255;
+int ba = 255;
+int tha = 255;
 
 //0
-int rb = 22;
+int rb = 0;
 int gb = 0;
 int bb = 0;
-int thb = 0;
+int thb = 26;
 
 
 boolean bypass = false;
 
 void setup() {
-  size(640, 480);
+  size(640, 180); // 320/90
+  //size(640, 480);
   //size(1280, 960);
 
   //cam = new Capture(this, Capture.list()[87]);
-  cam = new Capture(this, Capture.list()[1]);
-  //cam = new IPCapture(this, "frcvision.local:8081/stream.jpg", "", "");
+  //cam = new Capture(this, Capture.list()[1]);
+  cam = new IPCapture(this, "http://frcvision.local:1181/stream.mjpg", "", "");
 
   //String[] list = cam.list();
 
@@ -40,13 +41,12 @@ void setup() {
 void draw() {
   background(0);
   
-  if (cam.available())
+  //if (cam.available())
     cam.read();
-
+  image(cam, width/2, 0);
   for (int x=0; x<cam.width; x+=c) {
     for (int y=0; y<cam.height; y+=c) {
-      int index = y*cam.width+x;
-
+      int index = y*cam.width+x;      
       color expected = color(0, 0, 255);
       color[] cols = cam.pixels;
       int current = cols[index];
@@ -54,49 +54,63 @@ void draw() {
       int r = (int)Math.abs(red(current) - red(expected));
       int g = (int)Math.abs(green(current) - green(expected));
       int b = (int)Math.abs(blue(current) - blue(expected));
-
-      if (index >= cam.width && index < cols.length-((c/2)*cam.width) && b>=bb && r>=rb && g>=gb && r<=ra && g<=ga && b<=ba) {
-        float[] topRGB = new float[3];
-        float[] bottomRGB = new float[3];
-        float[] rightRGB = new float[3];
-        float[] leftRGB = new float[3];
-
-        int top = cols[index-(c/2)*cam.width];
-        topRGB[0] = red(top);
-        topRGB[1] = green(top);
-        topRGB[2] = blue(top);
-
-        int bottom = cols[index+(c/2)*cam.width];
-        bottomRGB[0] = red(bottom);
-        bottomRGB[1] = green(bottom);
-        bottomRGB[2] = blue(bottom);
-
-        int right = cols[index+(c/2)];
-        rightRGB[0] = red(right);
-        rightRGB[1] = green(right);
-        rightRGB[2] = blue(right);
-
-        int left = cols[index-(c/2)];
-        leftRGB[0] = red(left);
-        leftRGB[1] = green(left);
-        leftRGB[2] = blue(left);
-
-        float avrRGB[] = new float[3];
-        avrRGB[0] = (topRGB[0]+bottomRGB[0]+leftRGB[0]+rightRGB[0])/4;
-        avrRGB[1] = (topRGB[1]+bottomRGB[1]+leftRGB[1]+rightRGB[1])/4;
-        avrRGB[2] = (topRGB[2]+bottomRGB[2]+leftRGB[2]+rightRGB[2])/4;
-
-        float val = (Math.abs(avrRGB[0]-r)+Math.abs(avrRGB[1]-g)+Math.abs(avrRGB[2]-b))/3;
-        if ((val <=tha && val>=thb) || bypass) {
-          for (int x_=-c/2; x_<c/2; x_++) {
-            for (int y_=-c/2; y_<c/2; y_++) {
-              set(cam.width-x+x_, y+y_, current);
+      
+      //set(x, y, current);
+      //println(width/(c/2));
+      
+      if (b>=bb && r>=rb && g>=gb && r<=ra && g<=ga && b<=ba) {
+        if (index >= cam.width && index < cols.length-((c/2)*cam.width) && c>0){
+          float[] topRGB = new float[3];
+          float[] bottomRGB = new float[3];
+          float[] rightRGB = new float[3];
+          float[] leftRGB = new float[3];
+  
+          int top = cols[index-(c/2)*cam.width];
+          topRGB[0] = red(top);
+          topRGB[1] = green(top);
+          topRGB[2] = blue(top);
+  
+          int bottom = cols[index+(c/2)*cam.width];
+          bottomRGB[0] = red(bottom);
+          bottomRGB[1] = green(bottom);
+          bottomRGB[2] = blue(bottom);
+  
+          int right = cols[index+(c/2)];
+          rightRGB[0] = red(right);
+          rightRGB[1] = green(right);
+          rightRGB[2] = blue(right);
+  
+          int left = cols[index-(c/2)];
+          leftRGB[0] = red(left);
+          leftRGB[1] = green(left);
+          leftRGB[2] = blue(left);
+  
+          float avrRGB[] = new float[3];
+          avrRGB[0] = (topRGB[0]+bottomRGB[0]+leftRGB[0]+rightRGB[0])/4;
+          avrRGB[1] = (topRGB[1]+bottomRGB[1]+leftRGB[1]+rightRGB[1])/4;
+          avrRGB[2] = (topRGB[2]+bottomRGB[2]+leftRGB[2]+rightRGB[2])/4;
+  
+          float val = (Math.abs(avrRGB[0]-r)+Math.abs(avrRGB[1]-g)+Math.abs(avrRGB[2]-b))/3;
+          if ((val <=tha && val>=thb) || bypass) {
+            for (int x_=-c/2; x_<c/2; x_++) {
+              for (int y_=-c/2; y_<c/2; y_++) {   
+                set((x+x_), y+y_, cols[(y+y_)*cam.width+(x+x_)]);
+              }
             }
           }
         }
-        
+        else if(c==0){
+          float val = (r+g+b)/3;
+          if ((val <=tha && val>=thb) || bypass) {   
+           set(x, y, current);
+          }
+        }
       }
+      if(c==0)
+        y++;
     }
+    if(c==0)
+       x++;
   }
   
   fill(color(0, 255, 0));
@@ -110,8 +124,6 @@ void draw() {
 
 void mouseWheel(MouseEvent event) {
   int t = -event.getCount();
-  
-  //println((ra<255 && t>0) rb>0 && t<0));
   
   if(key=='q' && ((ra<255 && t>0) || (ra>0 && t<0)))
     ra+=t; 
@@ -129,7 +141,7 @@ void mouseWheel(MouseEvent event) {
     tha+=t;
   else if(key=='f' && ((thb<255 && t>0) || (thb>0 && t<0)))
     thb+=t;
-  else if (key=='x' && ((c>2 && t<0) || t>0))
+  else if (key=='x' && ((c>0 && t<0) || (t>0)))
     c+=2*t;
 }
 
