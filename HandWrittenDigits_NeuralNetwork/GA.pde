@@ -49,35 +49,79 @@ class GA {
   
   Network breed(){
     Network child = bestNetwork; 
-    int index1 =(int)random(netCount);
-    int index2 =(int)random(netCount);
+    Network parent1 = bestNetwork;
+    Network parent2 = bestNetwork;
     
-    while(index1==index2){
-      index2 = (int)random(netCount);
+    float[] fits = new float[netCount];
+    float[] fitCalc = new float[netCount+1];
+    
+    
+    float fitsum = 0;
+    for(int i=0; i<netCount; i++){
+      fits[i] =nets[i].fitness;
+      fitsum+=fits[i];
     }
     
-    Network parent1 = nets[index1];
-    Network parent2 = nets[index2];
+    float chance1 = random(fitsum);
+    float chance2 = random(fitsum);
+    
+    fitCalc[0] =0;
+    for(int i=0; i<netCount; i++){
+      fitCalc[i+1] = fits[i] + fitCalc[i];
+      println("["+i+"] [",fitCalc[i], fitCalc[i+1],")");
+      if(fitCalc[i]<=chance1 && chance1 <fitCalc[i+1])
+        parent1 = nets[i];
+      if(fitCalc[i]<=chance2 && chance2 <fitCalc[i+1])
+        parent2 = nets[i];
+        
+    }
+    
+    //println(fits);
+    //println(fitsum);
+    
+    //println(fitCalc);
+    
+    //int index1 =(int)random(fitsum);
+    //int index2 =(int)random(fitsum);
     
     
-    for(int i=0; i<parent1.weights.length; i++){
-      float chance = random(1);
+    
+    while(parent1.equals(parent2)){
+      chance2 = random(fitsum);
       
-      if(chance<=0.5 && chance > 0.01){
-        child.weights[i] = parent1.weights[i]; 
-      }
-      else if(chance <= 0.01){
-        child.weights[i] = random(-1, 1);
-      }
-      else{
-        child.weights[i] = parent2.weights[i];
+      for(int i=0; i<netCount; i++){
+        fitCalc[i+1] = fits[i] + fitCalc[i];
+      
+        if(fitCalc[i]<=chance2 && chance2 <fitCalc[i+1])
+          parent2 = nets[i]; 
       }
     }
+    
+    
+    //for(int i=0; i<parent1.weights.length; i++){
+    //  float chance = random(1);
+      
+    //  if(chance<=0.5 && chance > 0.01){
+    //    child.weights[i] = parent1.weights[i]; 
+    //  }
+    //  else if(chance <= 0.01){
+    //    child.weights[i] = random(-1, 1);
+    //  }
+    //  else{
+    //    child.weights[i] = parent2.weights[i];
+    //  }
+    //}
+    
     
     nets[netCount] = child;
     grade(nets[netCount]);
-    println(parent1.fitness, parent2.fitness, child.fitness);
     netCount++;
+    
+    println();
+    println(fits);
+    println();
+    println("chances", chance1, chance2);
+    println("finess", parent1.fitness, parent2.fitness, child.fitness);
     
     return child;
   }
