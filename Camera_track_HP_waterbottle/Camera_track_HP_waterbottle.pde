@@ -1,8 +1,8 @@
 import processing.video.*;
 import ipcapture.*;
 
-//Capture cam;
-IPCapture cam;
+Capture cam;
+//IPCapture cam;
 
 int c = 0;
 
@@ -10,25 +10,24 @@ int c = 0;
 int ra = 255;
 int ga = 255;
 int ba = 255;
-int tha = 255;
+int tha = 50;
 
 //0
 int rb = 0;
 int gb = 0;
 int bb = 0;
-int thb = 26;
-
+int thb = 0;
 
 boolean bypass = false;
 
 void setup() {
-  size(640, 180); // 320/90
-  //size(640, 480);
+  //size(640, 180); // 320/90
+  size(640, 480);
   //size(1280, 960);
 
   //cam = new Capture(this, Capture.list()[87]);
-  //cam = new Capture(this, Capture.list()[1]);
-  cam = new IPCapture(this, "http://frcvision.local:1181/stream.mjpg", "", "");
+  cam = new Capture(this, Capture.list()[1]);
+  //cam = new IPCapture(this, "http://frcvision.local:1181/stream.mjpg", "", "");
 
   //String[] list = cam.list();
 
@@ -41,9 +40,10 @@ void setup() {
 void draw() {
   background(0);
   
-  //if (cam.available())
+  if (cam.available())
     cam.read();
-  image(cam, width/2, 0);
+    
+  //image(cam, width/2, 0);
   for (int x=0; x<cam.width; x+=c) {
     for (int y=0; y<cam.height; y+=c) {
       int index = y*cam.width+x;      
@@ -94,15 +94,15 @@ void draw() {
           if ((val <=tha && val>=thb) || bypass) {
             for (int x_=-c/2; x_<c/2; x_++) {
               for (int y_=-c/2; y_<c/2; y_++) {   
-                set((x+x_), y+y_, cols[(y+y_)*cam.width+(x+x_)]);
+                set((x+x_), (y+y_), cols[(y+y_)*cam.width+(x+x_)]);
               }
             }
           }
         }
         else if(c==0){
-          float val = (r+g+b)/3;
-          if ((val <=tha && val>=thb) || bypass) {   
-           set(x, y, current);
+          float val = (Math.abs(red(current)-r)+Math.abs(green(current)-g)+Math.abs(blue(current)-b))/3;
+          if ((val <=tha && val>=thb) || bypass) {
+                set(x, y, current);
           }
         }
       }
@@ -150,6 +150,8 @@ void keyPressed() {
     if(bypass)
       bypass = false;
     else
-      bypass = true; 
+      bypass = true;
+      
+      
   }
 }
