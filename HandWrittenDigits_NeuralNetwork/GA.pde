@@ -6,9 +6,6 @@ class GA {
   Network[] nets = new Network[10000];
   private int netCount =0;
   
-  Network[] population = new Network[10000];
-  private int popCount =0;
-  
   private int InputNodes =28*28;
   private int HiddenXNodes = 2;
   private int HiddenYNodes = InputNodes;
@@ -32,8 +29,7 @@ class GA {
         nets[i].feedForward(float(td.getCurrentPixs()));
         grade(nets[i]);
       }
-    for(int i=0; i<10; i++)
-      breed();
+      
     }
     else{
       nets = new Network[1];
@@ -42,7 +38,7 @@ class GA {
       nets[0].feedForward(float(td.getCurrentPixs()));
       grade(nets[0]);
     }
-    println(netCount);
+    //println(netCount);
   }
   
   Network breed(){
@@ -143,7 +139,9 @@ class GA {
       }
       
       if(index == td.getCurrentnum())
-        net_.fitness+=1;
+        net_.fitness*=2;
+      else
+        net_.fitness/=2;
     }
     
     return net_.fitness;
