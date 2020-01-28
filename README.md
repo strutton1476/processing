@@ -10,6 +10,7 @@ my processing projects
   <li class=complete>SnowFall</li>
   <li class=complete>sketch_2DRay_casting</li>
   <li class=complete>terrain_generator_with_perlin_noise</li>
+  <li class=Complete>Camera_track_HP-waterbottle</li>
   <li class=complete>tick_tack_toe</li>
 </ul>
 <h3>Incomplete</h3>
@@ -17,7 +18,6 @@ my processing projects
   <li class=incomplete>snake</li>
   <li class=incomplete>astirodes</li>
   <li class=incomplete>Smart_Rockets</li>
-  <li class=incomplete>Camera_track_HP-waterbottle</li>
   <li class=incomplete>HandWrittenDigits_NeuralNetwork</li>
   <li class=incomplete>Insertion_Sort</li>
 </ul>
