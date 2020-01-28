@@ -25,20 +25,22 @@ void draw(){
 
 void mousePressed(){
   color current;
-  color other;
   
-  if(player1){
+  if(player1)
     current = color(255, 255, 0);
-    other = color(255, 0, 0);
-  }
-  else{
+  else
     current = color(255, 0, 0);
-    other = color(255, 255, 0);
-  }
-  
+    
   for(int x=0; x<cells.length; x++){
     if(mouseX >x*(width/cells.length)+48- r/2 && mouseX<x*(width/cells.length)+48+ r/2){
       for(int y=0; y<cells[x].length; y++){
+        
+        if(cells[x][0] == color(255, 255, 255)){
+          if(player1)
+            player1=false;
+          else
+            player1=true;
+        }
         
         if(cells[x][y]==color(255, 255, 255)){
           cells[x][y] = current;
@@ -49,14 +51,9 @@ void mousePressed(){
           if(cells[x][y-1]==color(255, 255, 255))
             cells[x][y-1] = current;
         }
+        
       }
       
-      if(player1){
-        player1=false;
-      }
-      else{
-        player1=true;
-      }
     }
   }
 }
