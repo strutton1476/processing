@@ -10,7 +10,7 @@ my processing projects
   <li class=complete>SnowFall</li>
   <li class=complete>sketch_2DRay_casting</li>
   <li class=complete>terrain_generator_with_perlin_noise</li>
-  <li class=Complete>Camera_track_HP-waterbottle</li>
+  <li class=Complete>Camera_Color_Filter</li>
   <li class=complete>tick_tack_toe</li>
 </ul>
 <h3>Incomplete</h3>
