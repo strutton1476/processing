@@ -15,6 +15,8 @@ my processing projects
 </ul>
 <h3>Incomplete</h3>
 <ul>
+  <li class=incomplete>Camera_OpenCV</li>
+  <li class=incomplete>Four_in_a_row</li>
   <li class=incomplete>snake</li>
   <li class=incomplete>astirodes</li>
   <li class=incomplete>Smart_Rockets</li>
