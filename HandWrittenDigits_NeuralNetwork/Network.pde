@@ -91,6 +91,9 @@ class Network{
     return Result;
   }
   
+  public Network Copy(){
+    return new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
+  }
   
   public void saveWeights(){
     PrintWriter hiddenLog, outputLog;

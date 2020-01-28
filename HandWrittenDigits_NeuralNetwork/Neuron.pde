@@ -11,9 +11,9 @@ class Neuron{
     axonValue = sigmoid(axonValue/2);
   }
   
-  public void addDendrite(Neuron[] n, float[] w){
-    dendrites = n;
-    weights = w;
+  public void addDendrite(Neuron[] neurons, float[] weights_){
+    dendrites = neurons;
+    weights = weights_;
   }
 
   private float sigmoid(float x) {
