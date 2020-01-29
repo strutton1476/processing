@@ -12,12 +12,14 @@ void draw(){
   fill(255);
   background(200);
   for(int i=1; i<3; i++){
+    
     line(i*width/3, 0, i*width/3, height); 
     line(0, i*height/3, width, i*height/3); 
   }
   for(int x=0; x<3; x++){
     for(int y=0; y<3; y++){
       fill(0);
+      //text(x*3+y, x*width/3+width/6, y*height/3+height/6);
       text(board[x*3+y], x*width/3+width/6, y*height/3+height/6);
     }
   }
@@ -28,26 +30,25 @@ void draw(){
 boolean Win(){
   boolean result = false;
   
-  if(board[0] == board[1] && board[0] == board[2] && board[0] != ""){
+  if(board[0]==board[3] && board[3]==board[6] && board[6] !="")
     result = true;
-    run = false;
-  }
-  if(board[3] == board[4] && board[3] == board[5] && board[3] != ""){
+  else if(board[1]==board[3] && board[3]==board[7] && board[7] !="")
     result = true;
-    run = false;
-  }
-  if(board[6] == board[7] && board[6] == board[8] && board[6] != ""){
+  else if(board[2]==board[5] && board[5]==board[8] && board[8] !="")
     result = true;
-    run = false;
-  }
-  if(board[0] == board[4] && board[0] == board[8] && board[0] != ""){
+  else if(board[0]==board[1] && board[1]==board[2] && board[2] !="")
     result = true;
-    run = false;
-  }
-  if(board[2] == board[4] && board[2] == board[6] && board[2] != ""){
+  else if(board[3]==board[4] && board[4]==board[5] && board[5] !="")
     result = true;
+  else if(board[6]==board[7] && board[7]==board[8] && board[8] !="")
+    result = true;
+  else if(board[0]==board[4] && board[4]==board[8] && board[8] !="")
+    result = true;
+  else if(board[2]==board[4] && board[4]==board[6] && board[6] !="")
+    result = true;
+  if(result)
     run = false;
-  }
+    
   return result;
 }
 
