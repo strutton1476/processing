@@ -1,6 +1,3 @@
-# processing
-my processing projects
-
 <h3>Complete</h3>
 <ul>
   <li class=complete>Bubble_sort</li>
