@@ -7,6 +7,7 @@ void setup(){
   for(int i=0; i<9; i++){
      board[i] = "";
   }
+  AIturn();
 }
 void draw(){
   fill(255);
@@ -71,6 +72,37 @@ void mousePressed(){
          }
        }
      }
+    }
+  }
+}
+
+void AIturn(){
+  float bestScore = 0;
+  float bestIndex = -1;
+  
+  for(int i=0; i<board.length; i++){
+    float score =0;
+    println((i), (i)/3);
+/** 1 2 3
+    4 5 6
+    7 8 9 **/
+    if(i%3==0){
+      
+    }
+    else if(i%3==1){
+      if(board[i-1] =="O")
+        score++;
+      if(board[i+1] =="O")
+        score++;
+      if(i/3==1){
+        if(board[i-4] =="O")
+          score++;
+        if(board[i+4] =="O")
+          score++;
+      }
+    }
+    else if(i%3==2){
+      
     }
   }
 }
