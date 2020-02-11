@@ -13,7 +13,14 @@ void setup(){
 }
 
 void draw(){
-  background(color(0,0,200));
+  background(color(0,150,255));
+  //strokeWeight(20);
+  //stroke(color(0,0,255));
+  //line(0,0,0,height);
+  //line(0,0,width,0);
+  //line(width,0,width,height);
+  //line(0,height,width,height);
+  strokeWeight(0);
   
   for(int x=0; x<cells.length; x++){
     for(int y=0; y<cells[x].length; y++){
