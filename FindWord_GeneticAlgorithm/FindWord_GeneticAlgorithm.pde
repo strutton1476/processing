@@ -1,44 +1,53 @@
 String expected = "school";
 ArrayList<String> population = new ArrayList<String>();
 ArrayList<String> matingPool = new ArrayList<String>();
+int bestScore =0;
+String bestString = "";
 
-int count =10;
+
+int count =2;
 void setup(){
   size(600, 500);
+  
   for(int i=0; i<count; i++)
     makeGuess();
-  
-  for(int i=0; i<population.size(); i++){
-    String current = population.get(i);
-    int score = grade(current);
     
-    for(int j=0; j<score; j++){
-      matingPool.add(current); 
-    }
-  }
+  //while(bestScore!= (expected.length()+1)){
+  //  breed();
+  //}
+  breed();
   
-  //println(population.size(), matingPool.size());
+  //println(bestScore, bestString);
 }
 
 void draw(){
+
 }
 
 int grade(String current){
   int score =1;
-  for(int j=0; j<current.length(); j++){
-    if(current.substring(j,j+1).equals(expected.substring(j, j+1))){
+  println(current);
+  for(int j=1; j<current.length(); j++){
+    if(current.substring(j-1,j).equals(expected.substring(j-1, j)))
       score++; 
-    }
   }
+  for(int j=0; j<score; j++)
+    matingPool.add(current);
+    
+  if(score > bestScore){
+    bestString = current;
+    bestScore = score; 
+  }
+    
   return score;
 }
 
 void breed(){
-  String[] parents = {population.get((int)random(population.size())), population.get((int)random(population.size()))};
+  String[] parents = {population.get((int)Math.floor(random(population.size()))), population.get((int)Math.floor(random(population.size())))};
   int count=0;
   
-  while(parents[0] == parents[1]){
-    parents[1] = population.get((int)random(population.size()));
+  while(parents[0].equals(parents[1])){
+    parents[1] = population.get((int)Math.floor(random(population.size())));
     if(count==1000){
       println("loop in breed overrun to "+count);
       break;
@@ -47,10 +56,12 @@ void breed(){
   }
   
   String result = "";
-  for(int i=0; i<parents[0].length(); i++){
-    result += parents[Math.round(random(1))].substring(i, i+1);
+  for(int i=1; i<parents[0].length()+1; i++){
+    result += parents[(int)random(2)].substring(i-1, i);
   }
   
+  population.add(result);
+  grade(result);
 }
 
 void makeGuess(){
@@ -60,4 +71,5 @@ void makeGuess(){
   }
   
   population.add(guess);
+  grade(guess);
 }
