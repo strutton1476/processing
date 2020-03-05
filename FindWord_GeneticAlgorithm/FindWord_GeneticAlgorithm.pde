@@ -1,31 +1,36 @@
-String expected = "ab";
+String expected = "awsomeness";
 ArrayList<String> population = new ArrayList<String>();
 ArrayList<String> matingPool = new ArrayList<String>();
 int bestScore =0;
 String bestString = "";
 
 
-int count = 50;
+int count = 500;
 void setup(){
   size(600, 500);
   
-  for(int i=0; i<count; i++)
+  while(matingPool.size() < count)
     makeGuess();
     
+  //println("end");
+   
 }
 
-void draw(){
+void draw(){  
   if(bestScore != (expected.length()))
     breed();
   else
-    println("correct",bestScore, bestString);
-
+    println("correct", bestString, bestString.equals(expected));
+    
+  while(matingPool.size() >2*count)
+    matingPool.remove(0);
 }
 
 int grade(String current){
+  population.add(current);
   int score =0;
-  //println(current);
-  for(int j=1; j<current.length(); j++){
+  //println(current,bestString, matingPool.size());
+  for(int j=1; j<current.length()+1; j++){
     if(current.substring(j-1,j).equals(expected.substring(j-1, j)))
       score++; 
   }
@@ -37,7 +42,11 @@ int grade(String current){
     
     println(score, current);
   }
-    
+  
+  for(int i=0; i<score; i++){
+    matingPool.add(current);
+  }
+  
   return score;
 }
 
@@ -62,7 +71,6 @@ void breed(){
       result += char(byte(random(97, 123)));
   }
   
-  population.add(result);
   grade(result);
 }
 
@@ -72,6 +80,5 @@ void makeGuess(){
     guess += char(byte(random(97, 123)));
   }
   
-  population.add(guess);
   grade(guess);
 }
