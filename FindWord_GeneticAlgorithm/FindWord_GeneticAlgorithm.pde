@@ -19,8 +19,10 @@ void setup(){
 void draw(){  
   if(bestScore != (expected.length()))
     breed();
-  else
-    println("correct", bestString, bestString.equals(expected));
+  else{
+    println("found string", bestString);
+    noLoop();
+  }
     
   while(matingPool.size() >2*count)
     matingPool.remove(0);
@@ -29,7 +31,7 @@ void draw(){
 int grade(String current){
   //population.add(current);
   int score =0;
-  println(current,bestString, matingPool.size());
+  //println(current,bestString, matingPool.size());
   for(int j=1; j<current.length()+1; j++){
     if(current.substring(j-1,j).equals(expected.substring(j-1, j)))
       score++; 
@@ -68,7 +70,7 @@ void breed(){
     if(random(1)>0.01)
       result += parents[(int)random(2)].substring(i-1, i);
     else{
-      result += char(byte(random(97, 123)));
+      result += randomCharacter();
     }
   }
   
@@ -78,12 +80,19 @@ void breed(){
 void makeGuess(){
   String guess = new String();
   for(int i=0; i<expected.length(); i++){
-    int ran =floor(random(97, 124));
-    if(ran==124)
-      guess+=" ";
-    else
-      guess += char(byte(ran));
+    guess+=randomCharacter();
   }
   
   grade(guess);
+}
+
+String randomCharacter(){
+    int ran =floor(random(97, 124));
+    String c = "";
+    if(ran==123)
+      c += " ";
+    else
+      c += char(byte(ran));
+      
+  return c;
 }
