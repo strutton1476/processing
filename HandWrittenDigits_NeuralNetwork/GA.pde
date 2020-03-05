@@ -3,8 +3,10 @@ class GA {
   //Network bestNetwork;
   
   int initSize = 10;
-  Network[] nets = new Network[10000];
-  private int netCount =0;
+  //Network[] nets = new Network[10000];
+  //private int netCount =0;
+  
+  ArrayList<Network> nets = new ArrayList<Network>();
   
   private int InputNodes =28*28;
   private int HiddenXNodes = 2;
@@ -24,19 +26,21 @@ class GA {
           weights[j] = random(-1, 1);
         }
         
-        nets[i] = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
-        netCount++;
-        nets[i].feedForward(float(td.getCurrentPixs()));
-        grade(nets[i]);
+        nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights));
+        
+        //netCount++;
+        //nets[i].feedForward(float(td.getCurrentPixs()));//things!!!
+        //Thread t = new FeedForwardThread(i);
+        //t.start();
+        
       }
       
     }
     else{
-      nets = new Network[1];
       
-      nets[0] = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen);
-      nets[0].feedForward(float(td.getCurrentPixs()));
-      grade(nets[0]);
+      nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen));
+      nets.get(0).feedForward(float(td.getCurrentPixs()));
+      grade(nets.get(0));
     }
     //println(netCount);
   }
@@ -45,27 +49,29 @@ class GA {
     Network parent1 = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen);
     Network parent2 = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen);
     
-    float[] fits = new float[netCount];
-    float[] fitCalc = new float[netCount+1];
+    ArrayList<Float> fits = new ArrayList<Float>();
+    ArrayList<Float> fitCalc = new ArrayList<Float>();
+    //float[] fits = new float[netCount];
+    //float[] fitCalc = new float[netCount+1];
     
     float fitsum = 0;
-    for(int i=0; i<netCount; i++){
-      fits[i] = nets[i].fitness;
-      fitsum += fits[i];
+    for(int i=0; i<nets.size(); i++){
+      fits.add(nets.get(i).fitness);
+      fitsum += fits.get(i);
     }
     
     float chance1 = random(fitsum);
     float chance2 = random(fitsum);
     
-    fitCalc[0] =0;
-    for(int i=0; i<netCount; i++){
-      fitCalc[i+1] = fits[i] + fitCalc[i];
+    fitCalc.add(0f);
+    for(int i=0; i<nets.size(); i++){
+      fitCalc.add(fits.get(i) + fitCalc.get(i));
       
-        if(fitCalc[i]<=chance1 && chance1 <fitCalc[i+1]){
-          parent1 = nets[i];
+        if(fitCalc.get(i)<=chance1 && chance1 <fitCalc.get(i+1)){
+          parent1 = nets.get(i);
         }
-        if(fitCalc[i]<=chance2 && chance2 <fitCalc[i+1]){
-          parent2 = nets[i];
+        if(fitCalc.get(i)<=chance2 && chance2 <fitCalc.get(i+1)){
+          parent2 = nets.get(i);
         }
         
       //println("["+i+"]","["+fitCalc[i]+","+fitCalc[i+1]+")");
@@ -74,11 +80,11 @@ class GA {
     while(parent1.weights[0] == parent2.weights[0]){  //make sure parents arnt the same
       chance2 = random(fitsum);
       
-      for(int i=0; i<netCount; i++){
-        fitCalc[i+1] = fits[i] + fitCalc[i];
+      for(int i=0; i<nets.size(); i++){
+        fitCalc.add(fits.get(i) + fitCalc.get(i));
         
-        if(fitCalc[i]<=chance2 && chance2 <fitCalc[i+1]){
-          parent2 = nets[i];
+        if(fitCalc.get(i)<=chance2 && chance2 <fitCalc.get(i+1)){
+          parent2 = nets.get(i);
         }
       }
     }
@@ -108,8 +114,7 @@ class GA {
     
     grade(child);
     
-    nets[netCount] = child;
-    netCount++;
+    nets.add(child);
     //println(parent1.fitness, parent2.fitness, child.fitness);
     
     return child;

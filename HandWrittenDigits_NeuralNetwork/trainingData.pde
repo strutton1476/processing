@@ -6,6 +6,11 @@ class trainingData{
   int current;
   
   trainingData(){
+    
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(30);
+    
     trainSet = loadBytes("train-images.idx3-ubyte");
     labelSet = loadBytes("train-labels.idx1-ubyte");
   
@@ -67,11 +72,8 @@ class trainingData{
         rect(cellSize*j, cellSize*i, cellSize, cellSize);
       }
     }
-    fill(255, 0, 0);
     
-    noStroke();
-    textAlign(CENTER, CENTER);
-    textSize(30);
+    fill(255, 0, 0);
     text(int(labelSet[current +8]), 30, 30); //the first 8 bits are meta data
   }
   
