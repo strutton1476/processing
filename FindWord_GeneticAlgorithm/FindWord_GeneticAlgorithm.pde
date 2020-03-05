@@ -1,5 +1,5 @@
-String expected = "awsomeness";
-ArrayList<String> population = new ArrayList<String>();
+String expected = "tim helland";
+//ArrayList<String> population = new ArrayList<String>();
 ArrayList<String> matingPool = new ArrayList<String>();
 int bestScore =0;
 String bestString = "";
@@ -27,9 +27,9 @@ void draw(){
 }
 
 int grade(String current){
-  population.add(current);
+  //population.add(current);
   int score =0;
-  //println(current,bestString, matingPool.size());
+  println(current,bestString, matingPool.size());
   for(int j=1; j<current.length()+1; j++){
     if(current.substring(j-1,j).equals(expected.substring(j-1, j)))
       score++; 
@@ -67,8 +67,9 @@ void breed(){
   for(int i=1; i<parents[0].length()+1; i++){
     if(random(1)>0.01)
       result += parents[(int)random(2)].substring(i-1, i);
-    else
+    else{
       result += char(byte(random(97, 123)));
+    }
   }
   
   grade(result);
@@ -77,7 +78,11 @@ void breed(){
 void makeGuess(){
   String guess = new String();
   for(int i=0; i<expected.length(); i++){
-    guess += char(byte(random(97, 123)));
+    int ran =floor(random(97, 124));
+    if(ran==124)
+      guess+=" ";
+    else
+      guess += char(byte(ran));
   }
   
   grade(guess);
