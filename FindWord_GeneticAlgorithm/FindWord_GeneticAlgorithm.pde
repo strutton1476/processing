@@ -1,7 +1,8 @@
 String expected = "tim helland";
+//String expected = "abcdefghijklmnopqrstuvwxyz";
 //ArrayList<String> population = new ArrayList<String>();
 ArrayList<String> matingPool = new ArrayList<String>();
-int bestScore =0;
+float bestScore =0;
 String bestString = "";
 
 
@@ -28,13 +29,17 @@ void draw(){
     matingPool.remove(0);
 }
 
-int grade(String current){
+float grade(String current){
   //population.add(current);
-  int score =0;
+  float score =0;
   //println(current,bestString, matingPool.size());
   for(int j=1; j<current.length()+1; j++){
     if(current.substring(j-1,j).equals(expected.substring(j-1, j)))
       score++; 
+    else{
+      score-=0.5;
+      //score/=10;
+    }
   }
   for(int j=0; j<score; j++)
     matingPool.add(current);
