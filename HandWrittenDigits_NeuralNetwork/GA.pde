@@ -33,7 +33,7 @@ class GA {
         //Thread t = new FeedForwardThread(i);
         //t.start();
       }
-      breed();
+      //breed();
     }
     else{
       
@@ -145,8 +145,9 @@ class GA {
   }
   
   void update(){
-   while(nets.size() > initSize*20)
-     nets.remove(0);
+    println(breed().fitness, nets.size());
+    while(nets.size() > 500)
+      nets.remove(0);
   }
   
 }
