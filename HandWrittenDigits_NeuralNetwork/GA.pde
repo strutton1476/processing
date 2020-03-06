@@ -32,7 +32,6 @@ class GA {
         //nets[i].feedForward(float(td.getCurrentPixs()));//things!!!
         //Thread t = new FeedForwardThread(i);
         //t.start();
-        
       }
       breed();
     }
