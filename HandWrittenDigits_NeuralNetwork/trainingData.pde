@@ -20,6 +20,18 @@ class trainingData{
     nextNum();
   }
   
+  public int getNum(float[] outputs){
+    int BestIndex =0;
+    float bestNum =0;
+    for(int i=0; i<outputs.length; i++){
+       if(outputs[i] > bestNum){
+         BestIndex = i;
+         bestNum = outputs[i];
+       }
+    }
+    return BestIndex;
+  }
+  
   
   public void nextNum(){
     int index = int(random(getCount()));

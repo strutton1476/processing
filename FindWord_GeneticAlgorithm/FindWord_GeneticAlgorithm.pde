@@ -8,7 +8,7 @@ String bestString = "";
 
 int count = 500;
 void setup(){
-  size(600, 500);
+  //size(600, 500);
   
   while(matingPool.size() < count)
     makeGuess();
@@ -21,7 +21,7 @@ void draw(){
   if(bestScore != (expected.length()))
     breed();
   else{
-    println("found string", bestString);
+    println("found string ", "\""+bestString+"\"");
     noLoop();
   }
     

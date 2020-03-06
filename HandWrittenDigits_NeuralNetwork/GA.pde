@@ -1,6 +1,6 @@
 class GA {
-  //float bestfitness = 100000;
-  //Network bestNetwork;
+  float bestfitness = 0;
+  Network bestNetwork;
   
   int initSize = 50;
   //Network[] nets = new Network[10000];
@@ -140,14 +140,29 @@ class GA {
         net_.fitness/=2;
     }
     
+    if(net_.fitness > bestfitness){
+      
+      bestNetwork = net_;
+      bestfitness = net_.fitness;
+      println(bestNetwork.fitness);
+    }
     
     return net_.fitness;
   }
-  
+  int c=0;
   void update(){
-    println(breed().fitness, nets.size());
+    //println(breed().fitness, nets.size());
+    if(c<100){
+      breed();
+    }
+    else{
+      println("best result",td.getNum(bestNetwork.feedForward(float(td.getCurrentPixs()))));
+      noLoop();
+    }
     while(nets.size() > 500)
       nets.remove(0);
+      
+    c++;
   }
   
 }
