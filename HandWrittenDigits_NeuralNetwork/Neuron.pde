@@ -19,4 +19,12 @@ class Neuron{
   private float sigmoid(float x) {
     return (float)(1/( 1 + Math.pow(Math.E,(-1*x))));
   }
+  
+  private float relu(float x){
+    float thresh =1;
+    if(x>thresh)
+      return (float)(x-thresh);
+    else
+      return 0;
+  }
 }

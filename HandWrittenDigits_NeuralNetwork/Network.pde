@@ -7,8 +7,17 @@ class Network{
   float[] weights;
   float fitness = 0;
   
-  Network(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_, int weightCount){
-    init(InputNodes_, HiddenXNodes_, HiddenYNodes_, OutputNodes_, loadWeights(weightCount));
+  Network(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_, int weightCount, boolean loading){
+    if(loading)
+      init(InputNodes_, HiddenXNodes_, HiddenYNodes_, OutputNodes_, loadWeights(weightCount));
+    else{
+     float[] weights = new float[weightCount];
+        
+      for (int j=0; j<weights.length; j++) {
+        weights[j] = random(-1, 1);
+      }
+      init(InputNodes_, HiddenXNodes_, HiddenYNodes_, OutputNodes_, weights);
+    }
   }
   
   Network(int InputNodes_, int HiddenXNodes_, int HiddenYNodes_, int OutputNodes_, float[] weights_){
@@ -65,42 +74,42 @@ class Network{
     
   }
   
-  public Thread FeedForward = new FeedForwardThread(this, Inputs);
-  
-  public float[] feedForward(float[] Inputs_){
-    FeedForward.start();
-    float[] result = new float[Outputs.length];
-    for(int i=0; i<result.length; i++){
-      result[i] = Outputs[i].axonValue; 
-    }
-    return result;
-  }
+  //public Thread FeedForward = new FeedForwardThread(this, Inputs);
   
   //public float[] feedForward(float[] Inputs_){
-  //  float[] Result = new float[Outputs.length];
-    
-  //  if(Inputs.length != Inputs_.length){
-  //    println("inputs must have the same length");
-  //    return Result;
+  //  FeedForward.start();
+  //  float[] result = new float[Outputs.length];
+  //  for(int i=0; i<result.length; i++){
+  //    result[i] = Outputs[i].axonValue; 
   //  }
-    
-  //  for(int i=0; i<Inputs_.length; i++){
-  //    Inputs[i].axonValue = Inputs_[i];
-  //  }
-  //  for(int i=0; i<HiddenXNodes; i++){
-  //    for(int j=0; j<HiddenYNodes; j++){
-  //      Hiddens[i][j].process();
-  //    } 
-  //  }
-  //  for(int i=0; i<Outputs.length; i++){
-  //    Outputs[i].process(); 
-  //  }
-  //  for(int i=0; i<Result.length; i++){
-  //    Result[i] = Outputs[i].axonValue;
-  //  }
-    
-  //  return Result;
+  //  return result;
   //}
+  
+  public float[] feedForward(float[] Inputs_){
+    float[] Result = new float[Outputs.length];
+    
+    if(Inputs.length != Inputs_.length){
+      println("inputs must have the same length");
+      return Result;
+    }
+    
+    for(int i=0; i<Inputs_.length; i++){
+      Inputs[i].axonValue = Inputs_[i];
+    }
+    for(int i=0; i<HiddenXNodes; i++){
+      for(int j=0; j<HiddenYNodes; j++){
+        Hiddens[i][j].process();
+      } 
+    }
+    for(int i=0; i<Outputs.length; i++){
+      Outputs[i].process(); 
+    }
+    for(int i=0; i<Result.length; i++){
+      Result[i] = Outputs[i].axonValue;
+    }
+    
+    return Result;
+  }
   
   public Network Copy(){
     return new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights);
@@ -155,5 +164,12 @@ class Network{
     }
     
     return weights_;
+  }
+  
+  public boolean equals(Network net){
+    for(int i=0; i<net.weights.length; i++)
+      if(weights[i] != net.weights[i])
+        return false;
+    return true;
   }
 }

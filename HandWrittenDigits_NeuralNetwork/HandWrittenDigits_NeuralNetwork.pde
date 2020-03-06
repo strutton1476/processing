@@ -16,7 +16,11 @@ void setup() {
 }
 
 void draw() {
-  td.display();
+  if(td != null)
+    td.display();
+  
+  if(ga != null)
+    ga.update();
 }
 
 void mousePressed(){
