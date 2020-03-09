@@ -24,5 +24,5 @@ void draw() {
 }
 
 void mousePressed(){
-  td.nextNum();
+  //td.nextNum();
 }
