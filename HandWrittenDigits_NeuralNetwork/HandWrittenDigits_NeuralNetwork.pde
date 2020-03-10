@@ -9,18 +9,17 @@ void settings() {
 
 void setup() {
   td = new trainingData(); //59,999 digits
-  ga = new GA(false);
+  //ga = new GA(false);
   
-  //Thread geneticThread = new GeneticThread();
-  //geneticThread.start();
+  Thread geneticThread = new GeneticThread();
+  geneticThread.start();
 }
 
 void draw() {
-  if(td != null)
+  if(ga != null){
     td.display();
-  
-  if(ga != null)
     ga.update();
+  }
 }
 
 void mousePressed(){
