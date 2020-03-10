@@ -1,8 +1,7 @@
 class GA {
-  float bestfitness = 0;
+  float bestfitness = -1000;
   Network bestNetwork;
   
-  int initSize = 50;
   //Network[] nets = new Network[10000];
   //private int netCount =0;
   
@@ -14,17 +13,34 @@ class GA {
   private int OutputNodes = 10;
   private int weightlen = 0;
   
+  private int numbAmt =1000;
+  private int breedAmt =10000;
+  private int initSize = 100;
+  
   GA(boolean loading) {
     // 1,237,152 weights
     weightlen = OutputNodes*HiddenYNodes + (HiddenXNodes-1)*HiddenYNodes*HiddenYNodes + HiddenYNodes*InputNodes;
     
     if(!loading){
-      int i=0;
-      while(nets.size() < initSize){
-        Network net = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, false);
+      //int i=0;
+      //while(nets.size() < initSize){
+      //  Network net = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, false);
         
-        for(int j=0; j<100*grade(net); j++){
+      //  for(int j=0; j<100*grade(net); j++){
+      //    nets.add(net);
+      //  }
+      //}
+      
+      //Thread init  = new initpopulation();
+      //init.start();
+      while(nets.size()<initSize){
+        //println(nets.size(), initSize);
+        Network net = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, false);
+        float val = grade(net);
+        for(int j=0; j<val; j++){
+          //println(j, val, initSize, nets.size());
           nets.add(net);
+          //println(nets.size());
         }
       }
       //for (int i=0; i<initSize; i++) {
@@ -36,10 +52,10 @@ class GA {
         
       //  //nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights));
         
-      //  //netCount++;
-      //  //nets[i].feedForward(float(td.getCurrentPixs()));//things!!!
-      //  //Thread t = new FeedForwardThread(i);
-      //  //t.start();
+      ////  netCount++;
+      ////  nets[i].feedForward(float(td.getCurrentPixs()));//things!!!
+      ////  Thread t = new FeedForwardThread(i);
+      ////  t.start();
       //}
       //breed();
     }
@@ -50,6 +66,8 @@ class GA {
       grade(nets.get(0));
     }
     //println(netCount);
+    
+    println("initSize hit");
   }
   
   Network breed(){
@@ -118,8 +136,7 @@ class GA {
     
     return child;
   }
-
-   int numbAmt =1000;
+   
    float grade(Network net_) {
     for(int j=0; j<numbAmt; j++){
       float[] result = net_.feedForward(float(td.getCurrentPixs()));
@@ -144,32 +161,39 @@ class GA {
         }
 
         if(index == td.getCurrentnum())
-          net_.fitness*=2;
-        else
-          net_.fitness/=2;
+          net_.fitness+=2;
+        //else
+        //  net_.fitness/=10;
       }
       td.nextNum();
     }
+    
+    //println(net_.fitness, bestfitness);
     if(net_.fitness > bestfitness){
       
       bestNetwork = net_;
       bestfitness = net_.fitness;
-      println(bestNetwork.fitness);
+      println(bestNetwork.fitness, nets.size());
     }
     
     return net_.fitness;
   }
   int c=0;
   void update(){
-    //println(breed().fitness, nets.size());
-    if(c<100){
+    if(c<=breedAmt && nets.size()>=initSize){
+      //println(breed().fitness, nets.size());
       breed();
-      while(nets.size() > 500)
+      if(c%20==0)
+        println(c, nets.size());
+      while(nets.size() > 100)
         nets.remove(0);
         
       c++;
+      p=false;
     }
-    trained = true;
+    else if(c>breedAmt){
+      trained = true;
+    }
   }
   
 }

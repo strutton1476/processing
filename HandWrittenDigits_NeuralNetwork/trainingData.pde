@@ -14,7 +14,7 @@ class trainingData{
     trainSet = loadBytes("train-images.idx3-ubyte");
     labelSet = loadBytes("train-labels.idx1-ubyte");
   
-    current = int(random(getCount()));
+    //current = int(random(getCount()));
     indexs = new int[getCount()];
     
     nextNum();
@@ -42,8 +42,8 @@ class trainingData{
     
     current = index;
     
-    indexs[indexCount] = current;
-    indexCount++;
+    //indexs[indexCount] = current;
+    //indexCount++;
   }
   
   public int getCount(){
