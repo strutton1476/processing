@@ -111,35 +111,37 @@ class GA {
     return child;
   }
 
+   int numbAmt =5;
    float grade(Network net_) {
-    float[] result = net_.feedForward(float(td.getCurrentPixs()));
-    float[] errors = new float[net_.Outputs.length];
-    float[] expected = td.getCurrentExpected();
-    float avrerror =0;
-    
-    for(int i=0; i<result.length; i++){
-       errors[i] = Math.abs(expected[i] - result[i]);
-       avrerror += errors[i];
-    }
-    avrerror /= errors.length;
-    
-    net_.fitness = map(avrerror, 0, 1, 1, 0);
-    //net_.fitness= avrerror;
-    
-    float smallest = 1000;
-    int index = 0;
-    for(int i=0; i<errors.length; i++){
-      if(errors[i] < smallest){
-        smallest = errors[i];
-        index = i;
+    for(int i=0; i<numbAmt; i++){
+      float[] result = net_.feedForward(float(td.getCurrentPixs()));
+      float[] errors = new float[net_.Outputs.length];
+      float[] expected = td.getCurrentExpected();
+      float avrerror =0;
+
+      for(int i=0; i<result.length; i++){
+         errors[i] = Math.abs(expected[i] - result[i]);
+         avrerror += errors[i];
       }
-      
-      if(index == td.getCurrentnum())
-        net_.fitness*=2;
-      else
-        net_.fitness/=2;
+      avrerror /= errors.length;
+
+      net_.fitness = map(avrerror, 0, 1, 1, 0);
+
+      float smallest = 1000;
+      int index = 0;
+      for(int i=0; i<errors.length; i++){
+        if(errors[i] < smallest){
+          smallest = errors[i];
+          index = i;
+        }
+
+        if(index == td.getCurrentnum())
+          net_.fitness*=2;
+        else
+          net_.fitness/=2;
+      }
+      td.nextNum();
     }
-    
     if(net_.fitness > bestfitness){
       
       bestNetwork = net_;
