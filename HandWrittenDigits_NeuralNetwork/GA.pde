@@ -19,20 +19,28 @@ class GA {
     weightlen = OutputNodes*HiddenYNodes + (HiddenXNodes-1)*HiddenYNodes*HiddenYNodes + HiddenYNodes*InputNodes;
     
     if(!loading){
-      for (int i=0; i<initSize; i++) {
+      int i=0;
+      while(nets.size() < initSize){
         Network net = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, false);
         
-        for(int j=0; j<grade(net); j++){
+        for(int j=0; j<100*grade(net); j++){
           nets.add(net);
         }
-        
-        //nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights));
-        
-        //netCount++;
-        //nets[i].feedForward(float(td.getCurrentPixs()));//things!!!
-        //Thread t = new FeedForwardThread(i);
-        //t.start();
       }
+      //for (int i=0; i<initSize; i++) {
+      //  Network net = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, false);
+        
+      //  for(int j=0; j<grade(net); j++){
+      //    nets.add(net);
+      //  }
+        
+      //  //nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weights));
+        
+      //  //netCount++;
+      //  //nets[i].feedForward(float(td.getCurrentPixs()));//things!!!
+      //  //Thread t = new FeedForwardThread(i);
+      //  //t.start();
+      //}
       //breed();
     }
     else{
@@ -111,9 +119,9 @@ class GA {
     return child;
   }
 
-   int numbAmt =5;
+   int numbAmt =1000;
    float grade(Network net_) {
-    for(int i=0; i<numbAmt; i++){
+    for(int j=0; j<numbAmt; j++){
       float[] result = net_.feedForward(float(td.getCurrentPixs()));
       float[] errors = new float[net_.Outputs.length];
       float[] expected = td.getCurrentExpected();
@@ -156,15 +164,12 @@ class GA {
     //println(breed().fitness, nets.size());
     if(c<100){
       breed();
+      while(nets.size() > 500)
+        nets.remove(0);
+        
+      c++;
     }
-    else{
-      println("best result",td.getNum(bestNetwork.feedForward(float(td.getCurrentPixs()))));
-      noLoop();
-    }
-    while(nets.size() > 500)
-      nets.remove(0);
-      
-    c++;
+    trained = true;
   }
   
 }

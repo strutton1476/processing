@@ -1,4 +1,5 @@
 int cellSize = 15;
+boolean trained =false;
 
 trainingData td;
 GA ga;
@@ -9,19 +10,20 @@ void settings() {
 
 void setup() {
   td = new trainingData(); //59,999 digits
-  //ga = new GA(false);
+  ga = new GA(false);
   
-  Thread geneticThread = new GeneticThread();
-  geneticThread.start();
+  //Thread geneticThread = new GeneticThread();
+  //geneticThread.start();
 }
 
 void draw() {
-  if(ga != null){
-    td.display();
-    ga.update();
-  }
+  ga.update();
+  td.display();
 }
 
 void mousePressed(){
-  //td.nextNum();
+  if(trained){
+    td.nextNum();
+    println(td.getNum(ga.bestNetwork.feedForward(float(td.getCurrentPixs()))));
+  }
 }
