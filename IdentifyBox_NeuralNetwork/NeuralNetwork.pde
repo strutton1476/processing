@@ -67,10 +67,21 @@ class NeuralNetwork{
     }
   }
   
-  public void feedForward(float[] inputs){
+  public float[] feedForward(float[] inputs){
+    float[] results = new float[Outputs.length];
     for(int i=0; i<inputs.length; i++){
-      
+      this.Inputs[i].axonValue = inputs[i];
     }
+    for(int i=0; i<Hiddens.length; i++){
+      for(int j=0; j<Hiddens[i].length; j++){
+        Hiddens[i][j].process();
+      }
+    }
+    for(int i=0; i<Outputs.length; i++){
+      Outputs[i].process();
+      results[i] = Outputs[i].axonValue;
+    }
+    return results;
   }
   
 }
