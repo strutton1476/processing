@@ -7,4 +7,12 @@ public class GeneticAlgorithm{
       nets.add(new Network(4, 2, 4, 16, false));
     }
   }
+  
+  public void breed(){
+  
+  }
+  
+  public float grade(){
+  
+  }
 }
