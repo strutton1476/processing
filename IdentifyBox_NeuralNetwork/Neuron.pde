@@ -12,6 +12,10 @@ public class Neuron{
     for(int i=0; i<dendriteValue.size(); i++){
       axonValue += dendriteValue.get(i).axonValue * dendriteWeight.get(i); 
     }
-    axonValue /= dendriteValue.size();
+    axonValue = sigmoid(axonValue/2);
+  }
+  
+  private float sigmoid(float x) {
+    return (float)(1/( 1 + Math.pow(Math.E,(-1*x))));
   }
 }
