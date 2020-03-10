@@ -25,7 +25,6 @@ class NeuralNetwork{
     this.Hiddens = new Neuron[HiddenX][HiddenY];
     this.Outputs = new Neuron[Output];
     
-    
     for(int i=0; i<this.Inputs.length; i++){
        this.Inputs[i] = new Neuron();
     }
