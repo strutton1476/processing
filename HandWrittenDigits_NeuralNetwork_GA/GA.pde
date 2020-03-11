@@ -10,11 +10,11 @@ class GA {
   private int OutputNodes = 10;
   private int weightlen = -1;
   
-  private int numbAmt =100;
+  private int numbAmt =10;
   private int breedAmt =4000;
   private int c=-1, q=0;
-  private int initSize = 200;
-  private int maxPopulation = 500;
+  private int initSize = 10;
+  private int maxPopulation = 300;
   
   private Thread preThread = new presentThread(numbAmt, breedAmt);
   
@@ -80,9 +80,12 @@ class GA {
     Network parent1 = nets.get((int)Math.floor(random(nets.size())));
     Network parent2 = nets.get((int)Math.floor(random(nets.size())));
     
+    println("test");
+    
     while(parent1.equals(parent2))
       parent2 = nets.get((int)Math.floor(random(nets.size())));
     
+    println("test");
     float[] w = new float[parent1.weights.length];//set weights
     for(int i=0; i<parent1.weights.length; i++){
       float ran = random(100);
