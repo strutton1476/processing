@@ -2,6 +2,7 @@ int cellSize = 15;
 boolean trained =false;
 boolean p = false;
 Thread tdT;
+boolean loading = false;
 
 trainingData td;
 GA ga;
@@ -14,7 +15,7 @@ void setup() {
   //td = new trainingData(); //59,999 digits
   tdT = new trainingThread();
   
-  ga = new GA(false);
+  ga = new GA(loading);
   //Thread geneticThread = new GeneticThread();
   //geneticThread.start();
   

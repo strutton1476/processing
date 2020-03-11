@@ -82,45 +82,6 @@ class GA {
     
     while(parent1.equals(parent2))
       parent2 = nets.get((int)Math.floor(random(nets.size())));
-     
-    //ArrayList<Float> fits = new ArrayList<Float>();
-    //ArrayList<Float> fitCalc = new ArrayList<Float>();
-    //float[] fits = new float[netCount];
-    //float[] fitCalc = new float[netCount+1];
-    
-    //float fitsum = 0;
-    //for(int i=0; i<nets.size(); i++){
-    //  fits.add(nets.get(i).fitness);
-    //  fitsum += fits.get(i);
-    //}
-    
-    //float chance1 = random(fitsum);
-    //float chance2 = random(fitsum);
-    
-    //fitCalc.add(0f);
-    //for(int i=0; i<nets.size(); i++){
-    //  fitCalc.add(fits.get(i) + fitCalc.get(i));
-      
-    //    if(fitCalc.get(i)<=chance1 && chance1 <fitCalc.get(i+1)){
-    //      parent1 = nets.get(i);
-    //    }
-    //    if(fitCalc.get(i)<=chance2 && chance2 <fitCalc.get(i+1)){
-    //      parent2 = nets.get(i);
-    //    }
-        
-    //  //println("["+i+"]","["+fitCalc[i]+","+fitCalc[i+1]+")");
-    //}
-    
-    //println(chance1, chance2);
-    //println();
-    //println(fits);
-    
-    //Network old;
-    //if(parent1.fitness < parent2.fitness){
-    //  old = parent1;
-    //  parent1 = parent2;
-    //  parent2 = old;
-    //}
     
     float[] w = new float[parent1.weights.length];//set weights
     for(int i=0; i<parent1.weights.length; i++){
@@ -161,8 +122,11 @@ class GA {
          avrerror += errors[i];
       }
       avrerror /= errors.length;
+      
+      fit = map(avrerror, 0, 1, 2, 1);
+      
+      fit = (float)Math.pow(5d, (double)fit);
 
-      fit = map(avrerror, 0, 1, 1, 0);
 
       float smallest = 1000;
       int index = 0;
@@ -174,9 +138,9 @@ class GA {
       }
       
       if(index == td.getCurrentnum())
-        fit+=5;
+        fit*=2;
       else
-        fit-=1;
+        fit-=10;
      
      avrfit += fit;
       //td.nextNum();
