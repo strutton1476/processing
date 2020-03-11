@@ -11,26 +11,37 @@ void settings() {
 }
 
 void setup() {
-  td = new trainingData(); //59,999 digits
-  //tdT = new trainingThread();
-  //tdT.start();
+  //td = new trainingData(); //59,999 digits
+  tdT = new trainingThread();
   
-  ga = new GA(false);
+  ga = new GA(true);
   //Thread geneticThread = new GeneticThread();
   //geneticThread.start();
+  
+  println(ga.nets.get(0).weights[763]);
 }
 
 void draw() {
   //println(ga.nets.size());
   ga.update();
-  if(trained)
-    td.display();
+  //tdT.run();
+  //if(trained)
+  //td.display();
 }
 
 void mousePressed(){
   p=true;
   if(trained){
     td.nextNum();
+    tdT.run();
     println(td.getNum(ga.bestNetwork.feedForward(float(td.getCurrentPixs()))));
+  }
+}
+
+void keyPressed(){
+  if(key=='q'){
+    noLoop();
+    ga.bestNetwork.saveWeights();
+    println("Saved Weights");
   }
 }

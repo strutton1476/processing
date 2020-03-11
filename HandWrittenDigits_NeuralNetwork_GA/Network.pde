@@ -116,48 +116,68 @@ class Network{
   }
   
   public void saveWeights(){
-    PrintWriter hiddenLog, outputLog;
+    PrintWriter weightLog;
     
-    hiddenLog = createWriter("Hiddens.txt");
-    outputLog = createWriter("Outputs.txt");
+    weightLog = createWriter("Weights.txt");
     
-    for(int i=0; i<Hiddens.length; i++){
-      for(int j=0; j<Hiddens[i].length; j++){
-        for(int k=0; k<Hiddens[i][j].weights[k]; k++){
-          hiddenLog.println(Hiddens[i][j].weights[j]);
-          println(Hiddens[i][j].weights[k]);
-        }
-      }
+    for(int i=0; i<weights.length; i++){
+      weightLog.println(weights[i]); 
     }
-    hiddenLog.flush(); 
+    weightLog.flush();
+    //PrintWriter hiddenLog, outputLog;
     
-    for(int i=0; i<Outputs.length; i++){
-      for(int j=0; j<Outputs[i].weights.length; j++){
-        outputLog.println(Outputs[i].weights[j]);
-      }
-    }
-    outputLog.flush();
+    //hiddenLog = createWriter("Hiddens.txt");
+    //outputLog = createWriter("Outputs.txt");
+    
+    //for(int i=0; i<Hiddens.length; i++){
+    //  for(int j=0; j<Hiddens[i].length; j++){
+    //    for(int k=0; k<Hiddens[i][j].weights[k]; k++){
+    //      hiddenLog.println(Hiddens[i][j].weights[j]);
+    //      println(Hiddens[i][j].weights[k]);
+    //    }
+    //  }
+    //}
+    //hiddenLog.flush(); 
+    
+    //for(int i=0; i<Outputs.length; i++){
+    //  for(int j=0; j<Outputs[i].weights.length; j++){
+    //    outputLog.println(Outputs[i].weights[j]);
+    //  }
+    //}
+    //outputLog.flush();
   }
   
   
   public float[] loadWeights(int weightCount){
-    BufferedReader hiddenLog = createReader("Hiddens.txt");
-    BufferedReader outputLog = createReader("Outputs.txt");
+    //BufferedReader hiddenLog = createReader("Hiddens.txt");
+    //BufferedReader outputLog = createReader("Outputs.txt");
+    BufferedReader weightsLog = createReader("Weights.txt");
+    
     float[] weights_ = new float[weightCount];
     
     String line = null;
     int i=0;
     
+
+    
     try {
-      while ((line = hiddenLog.readLine()) != null) {
+      while ((line = weightsLog.readLine()) != null) {
         weights_[i] = float(line);
+        i++;
       }
-      hiddenLog.close();
+      weightsLog.close();
       
-      while((line = outputLog.readLine()) != null){
-        weights_[i] = float(line);
-      }
-      outputLog.close();
+      //while ((line = hiddenLog.readLine()) != null) {
+      //  weights_[i] = float(line);
+      //  i++;
+      //}
+      //hiddenLog.close();
+      
+      //while((line = outputLog.readLine()) != null){
+      //  weights_[i] = float(line);
+      //  i++;
+      //}
+      //outputLog.close();
     }
     catch (IOException e) {
       e.printStackTrace();

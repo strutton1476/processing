@@ -15,7 +15,13 @@ class GA {
   
   private int numbAmt =1000;
   private int breedAmt =10000;
+  //private int numbAmt =10;
+  //private int breedAmt =10;
   private int initSize = 100;
+  private int c = 0;
+  
+  private String prev = "";
+  private String present = "";
   
   GA(boolean loading) {
     // 1,237,152 weights
@@ -63,7 +69,9 @@ class GA {
       
       //nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, true));
       //nets.get(0).feedForward(float(td.getCurrentPixs()));
+      nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, loading));
       grade(nets.get(0));
+      trained = true;
     }
     //println(netCount);
     
@@ -139,6 +147,12 @@ class GA {
    
    float grade(Network net_) {
     for(int j=0; j<numbAmt; j++){
+      present = 100*(c*(numbAmt-1)+j)/(numbAmt*breedAmt)+"%";
+      if(!prev.equals(present))
+        println(present);
+      prev = present;
+      
+      
       float[] result = net_.feedForward(float(td.getCurrentPixs()));
       float[] errors = new float[net_.Outputs.length];
       float[] expected = td.getCurrentExpected();
@@ -166,6 +180,7 @@ class GA {
         //  net_.fitness/=10;
       }
       td.nextNum();
+      tdT.run();
     }
     
     //println(net_.fitness, bestfitness);
@@ -176,16 +191,20 @@ class GA {
       println(bestNetwork.fitness, nets.size());
     }
     
+
     return net_.fitness;
   }
-  int c=0;
+  
+  Thread b = new breedThread();
   void update(){
     if(c<=breedAmt && nets.size()>=initSize){
       //println(breed().fitness, nets.size());
-      breed();
-      if(c%20==0)
-        println(c, nets.size());
-      while(nets.size() > 100)
+      //breed();
+      b.run();
+      //println(c);
+      //if(c%20==0)
+      //  println(c, nets.size());
+      while(nets.size() > 250)
         nets.remove(0);
         
       c++;

@@ -26,20 +26,23 @@ class trainingThread extends Thread{
   }
   
   public void run(){
-    while(true){
-      //td.display();
-      for(int i=0; i<28; i++){
-        for(int j=0; j<28; j++){
-          fill(td.getCurrentPixs()[i*28 +j]); //the first 16 bits are meta data
-          rect(cellSize*j, cellSize*i, cellSize, cellSize);
-        }
-      }
-      
-      fill(255, 0, 0);
-      text(int(td.labelSet[td.current +8]), 30, 30); //the first 8 bits are meta data
-    }
-  }
+    td.display();
+    //for(int i=0; i<28; i++){
+    //  for(int j=0; j<28; j++){
+    //    fill(td.getCurrentPixs()[i*28 +j]); //the first 16 bits are meta data
+    //    rect(cellSize*j, cellSize*i, cellSize, cellSize);
+    //  }
+    //}
     
+    //fill(255, 0, 0);
+    //text(int(td.labelSet[td.current +8]), 30, 30); //the first 8 bits are meta data
+  }
+}
+
+public class breedThread extends Thread{
+  public void run(){
+    ga.breed();
+  }
 }
 
 //class FeedForwardThread extends Thread{
@@ -76,4 +79,4 @@ class trainingThread extends Thread{
 //      ga.grade(ga.nets.get(index));
 //    }
 //  }
-//}
+//}}
