@@ -8,7 +8,7 @@ class GA {
   private int HiddenXNodes = 2;
   private int HiddenYNodes = InputNodes;
   private int OutputNodes = 10;
-  private int weightlen = 0;
+  private int weightlen = -1;
   
   private int numbAmt =100;
   private int breedAmt =4000;
