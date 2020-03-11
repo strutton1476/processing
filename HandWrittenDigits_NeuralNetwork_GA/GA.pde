@@ -14,6 +14,7 @@ class GA {
   private int breedAmt =4000;
   private int c=0, q=0;
   private int initSize = 200;
+  private int maxPopulation = 500;
   
   private Thread preThread = new presentThread(numbAmt, breedAmt);
   
@@ -206,7 +207,7 @@ class GA {
       //println(c);
       //if(c%20==0)
       //  println(c, nets.size());
-      while(nets.size() > 1000)
+      while(nets.size() > maxPopulation)
         nets.remove(0);
         
       c++;
