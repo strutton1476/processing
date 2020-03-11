@@ -14,11 +14,11 @@ void setup() {
   //td = new trainingData(); //59,999 digits
   tdT = new trainingThread();
   
-  ga = new GA(true);
+  ga = new GA(false);
   //Thread geneticThread = new GeneticThread();
   //geneticThread.start();
   
-  println(ga.nets.get(0).weights[763]);
+  //println(ga.nets.get(0).weights[1237151]);
 }
 
 void draw() {

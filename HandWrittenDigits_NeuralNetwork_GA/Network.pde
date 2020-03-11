@@ -154,7 +154,6 @@ class Network{
     BufferedReader weightsLog = createReader("Weights.txt");
     
     float[] weights_ = new float[weightCount];
-    
     String line = null;
     int i=0;
     

@@ -2,9 +2,6 @@ class GA {
   float bestfitness = -1000;
   Network bestNetwork;
   
-  //Network[] nets = new Network[10000];
-  //private int netCount =0;
-  
   ArrayList<Network> nets = new ArrayList<Network>();
   
   private int InputNodes =28*28;
@@ -13,15 +10,12 @@ class GA {
   private int OutputNodes = 10;
   private int weightlen = 0;
   
-  private int numbAmt =1000;
-  private int breedAmt =10000;
-  //private int numbAmt =10;
-  //private int breedAmt =10;
-  private int initSize = 100;
-  private int c = 0;
+  private int numbAmt =10000;
+  private int breedAmt =4000;
+  private int c=0, q=0;
+  private int initSize = 200;
   
-  private String prev = "";
-  private String present = "";
+  private Thread preThread = new presentThread(numbAmt, breedAmt);
   
   GA(boolean loading) {
     // 1,237,152 weights
@@ -42,7 +36,11 @@ class GA {
       while(nets.size()<initSize){
         //println(nets.size(), initSize);
         Network net = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, false);
+        
+        //float d = millis();
         float val = grade(net);
+        //println("GradeTime", millis() - d);
+        
         for(int j=0; j<val; j++){
           //println(j, val, initSize, nets.size());
           nets.add(net);
@@ -66,12 +64,11 @@ class GA {
       //breed();
     }
     else{
-      
-      //nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, true));
-      //nets.get(0).feedForward(float(td.getCurrentPixs()));
       nets.add(new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, weightlen, loading));
       grade(nets.get(0));
       trained = true;
+      
+      println("100%");
     }
     //println(netCount);
     
@@ -137,26 +134,25 @@ class GA {
     
     Network child = new Network(InputNodes, HiddenXNodes, HiddenYNodes, OutputNodes, w);
     
-    grade(child);
-    for(int i=0; i<grade(child); i++)
+    float val = grade(child);
+    for(int i=0; i<val; i++)
       nets.add(child);
     //println(parent1.fitness, parent2.fitness, child.fitness);
     
     return child;
   }
    
-   float grade(Network net_) {
-    for(int j=0; j<numbAmt; j++){
-      present = 100*(c*(numbAmt-1)+j)/(numbAmt*breedAmt)+"%";
-      if(!prev.equals(present))
-        println(present);
-      prev = present;
+  float grade(Network net_) {
+    float avrfit =0;
+    for(q=0; q<numbAmt; q++){
+      float fit = 0;
       
+      preThread.run();
       
       float[] result = net_.feedForward(float(td.getCurrentPixs()));
       float[] errors = new float[net_.Outputs.length];
       float[] expected = td.getCurrentExpected();
-      float avrerror =0;
+      float avrerror = 0;
 
       for(int i=0; i<result.length; i++){
          errors[i] = Math.abs(expected[i] - result[i]);
@@ -164,7 +160,7 @@ class GA {
       }
       avrerror /= errors.length;
 
-      net_.fitness = map(avrerror, 0, 1, 1, 0);
+      fit = map(avrerror, 0, 1, 1, 0);
 
       float smallest = 1000;
       int index = 0;
@@ -173,18 +169,24 @@ class GA {
           smallest = errors[i];
           index = i;
         }
-
-        if(index == td.getCurrentnum())
-          net_.fitness+=2;
-        //else
-        //  net_.fitness/=10;
       }
-      td.nextNum();
+      
+      if(index == td.getCurrentnum())
+        fit+=5;
+      else
+        fit-=1;
+     
+     avrfit += fit;
+      //td.nextNum();
       tdT.run();
     }
     
+    avrfit /= numbAmt;
+    
+    net_.fitness = avrfit;
+    
     //println(net_.fitness, bestfitness);
-    if(net_.fitness > bestfitness){
+    if(net_.fitness > bestfitness && net_.fitness >= 1){
       
       bestNetwork = net_;
       bestfitness = net_.fitness;
@@ -195,16 +197,16 @@ class GA {
     return net_.fitness;
   }
   
-  Thread b = new breedThread();
+  Thread breeder = new breedThread();
   void update(){
     if(c<=breedAmt && nets.size()>=initSize){
       //println(breed().fitness, nets.size());
       //breed();
-      b.run();
+      breeder.run();
       //println(c);
       //if(c%20==0)
       //  println(c, nets.size());
-      while(nets.size() > 250)
+      while(nets.size() > 1000)
         nets.remove(0);
         
       c++;
@@ -212,6 +214,7 @@ class GA {
     }
     else if(c>breedAmt){
       trained = true;
+      bestNetwork.saveWeights();
     }
   }
   

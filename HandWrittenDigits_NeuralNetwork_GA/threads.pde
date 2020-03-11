@@ -26,6 +26,7 @@ class trainingThread extends Thread{
   }
   
   public void run(){
+    td.nextNum();
     td.display();
     //for(int i=0; i<28; i++){
     //  for(int j=0; j<28; j++){
@@ -42,6 +43,35 @@ class trainingThread extends Thread{
 public class breedThread extends Thread{
   public void run(){
     ga.breed();
+  }
+}
+
+public class presentThread extends Thread{
+  private String present = "";
+  private String prev = "";
+  private int numbAmt;
+  private int breedAmt;
+  private int q=0, c=0;
+  
+  
+  public presentThread(int numbAmt, int breedAmt){
+    this.numbAmt = numbAmt;
+    this.breedAmt = breedAmt;
+  }
+  public void run(){
+    if(q==numbAmt){
+      q=0;
+      c++;
+    }
+    if(c<=breedAmt){
+      present = 100*(c*(numbAmt-1)+q)/(numbAmt*breedAmt)+"%";
+      if(!prev.equals(present))
+        println(present);
+      prev = present;
+    }
+    //println("test",100*(c*(numbAmt-1)+q)/(numbAmt*breedAmt));
+    
+    q++;
   }
 }
 
