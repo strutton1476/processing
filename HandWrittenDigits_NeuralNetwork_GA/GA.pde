@@ -10,9 +10,9 @@ class GA {
   private int OutputNodes = 10;
   private int weightlen = 0;
   
-  private int numbAmt =10000;
+  private int numbAmt =100;
   private int breedAmt =4000;
-  private int c=0, q=0;
+  private int c=-1, q=0;
   private int initSize = 200;
   private int maxPopulation = 500;
   
@@ -42,7 +42,7 @@ class GA {
         float val = grade(net);
         //println("GradeTime", millis() - d);
         
-        for(int j=0; j<val; j++){
+        for(int j=1; j<val; j++){
           //println(j, val, initSize, nets.size());
           nets.add(net);
           //println(nets.size());
@@ -143,12 +143,13 @@ class GA {
     return child;
   }
    
-  float grade(Network net_) {
+  float grade(Network net_) { //work on grading meothod
     float avrfit =0;
     for(q=0; q<numbAmt; q++){
       float fit = 0;
       
-      preThread.run();
+      if(c>-1)
+        preThread.run();
       
       float[] result = net_.feedForward(float(td.getCurrentPixs()));
       float[] errors = new float[net_.Outputs.length];
