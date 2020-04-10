@@ -23,8 +23,6 @@ class NeuralNetwork{
     
     weights = new float[weightCount];
     
-    println(weightCount);
-    
     initWeights(loading);
         
     int y = 0;
@@ -98,6 +96,22 @@ class NeuralNetwork{
       Outputs[i] = Neurons[this.Outputs[i]].axonValue;
       
     return Outputs;
+  }
+  
+  void train(float[] inputs, float[] expected){
+    int len = expected.length;
+    float[] result = feedForward(inputs);
+    float[] error = new float[len];
+    float avr = 0;
+    
+    for(int i=0; i<len; i++){
+       error[i] = (float)Math.pow(expected[i] - result[i], 2);
+       avr+= error[i];
+    }
+    
+    avr/=len;
+    
+    
   }
   
   public void saveWeights(){
