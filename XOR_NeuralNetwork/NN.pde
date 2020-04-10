@@ -17,11 +17,13 @@ class NeuralNetwork{
     
     int weightCount = 0;
     if(HiddenX>0)
-      weightCount = Input*HiddenY+HiddenY^(HiddenX-1)+HiddenY*Output;
+      weightCount = Input*HiddenY+ (int)Math.pow(HiddenY,HiddenX-1)+HiddenY*Output;
     else
       weightCount = Input*HiddenY+HiddenY*Output;
     
     weights = new float[weightCount];
+    
+    println(weightCount);
     
     initWeights(loading);
         
@@ -38,23 +40,19 @@ class NeuralNetwork{
       for(int v=0; v<HiddenY; v++){
         Hiddens[i][v] = y;
         Neurons[y] = new Neuron();
-        //println(i, v);
-        
-        
+            
         if(i==0){
           for(int j=0; j<Input; j++){
-            println(j, Inputs[j]);
-            Neurons[y].addDendrite(Neurons[Inputs[j]], weights[Count]);
-            Count++;
+            Neurons[y].addDendrite(new Neuron(), weights[Count]);
           }
         }
         else{
           for(int j=0; j<HiddenY; j++){
             Neurons[y].addDendrite(Neurons[Hiddens[i-1][j]], weights[Count]);
-            Count++;
+            
           } 
         }
-        
+        Count++;
         y++;
       }
     }
@@ -63,12 +61,11 @@ class NeuralNetwork{
       Outputs[i] = y;
       Neurons[y] = new Neuron();
       
-      for(int v=0; v<HiddenX; v++){
-        for(int j=0; j<HiddenY; j++){
-          Neurons[y].addDendrite(Neurons[Hiddens[v][j]], weights[Count]);
-          Count++;
-        }
-      }   
+      for(int j=0; j<HiddenY; j++){
+        Neurons[y].addDendrite(Neurons[Hiddens[HiddenX-1][j]], weights[Count]);
+        Count++;
+      }
+         
       y++;
     }
     
@@ -79,7 +76,7 @@ class NeuralNetwork{
       weights = loadWeights(weights.length);
     else{
       for(int i=0; i<weights.length; i++)
-        weights[i] = random(-range, range);
+        weights[i] = 1;//random(-range, range);
     }
   }
   
