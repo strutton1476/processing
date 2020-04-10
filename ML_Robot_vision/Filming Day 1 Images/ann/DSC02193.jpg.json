@@ -1,0 +1,54 @@
+{
+    "description": "",
+    "tags": [
+        {
+            "name": "Valid",
+            "value": null,
+            "labelerLogin": "strutton1476"
+        }
+    ],
+    "size": {
+        "height": 480,
+        "width": 640
+    },
+    "objects": [
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        223,
+                        122
+                    ],
+                    [
+                        310,
+                        213
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        431,
+                        114
+                    ],
+                    [
+                        516,
+                        196
+                    ]
+                ],
+                "interior": []
+            }
+        }
+    ]
+}

@@ -1,0 +1,130 @@
+{
+    "description": "",
+    "tags": [
+        {
+            "name": "Valid",
+            "value": null,
+            "labelerLogin": "strutton1476"
+        }
+    ],
+    "size": {
+        "height": 480,
+        "width": 640
+    },
+    "objects": [
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        77,
+                        288
+                    ],
+                    [
+                        143,
+                        351
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        32,
+                        199
+                    ],
+                    [
+                        84,
+                        248
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        44,
+                        112
+                    ],
+                    [
+                        78,
+                        146
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        428,
+                        43
+                    ],
+                    [
+                        453,
+                        72
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        461,
+                        35
+                    ],
+                    [
+                        485,
+                        61
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        490,
+                        27
+                    ],
+                    [
+                        513,
+                        52
+                    ]
+                ],
+                "interior": []
+            }
+        }
+    ]
+}

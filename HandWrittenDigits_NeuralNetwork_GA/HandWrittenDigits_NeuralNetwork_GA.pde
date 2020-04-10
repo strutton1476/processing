@@ -41,7 +41,8 @@ void mousePressed(){
 
 void keyPressed(){
   if(key=='q'){
-    noLoop();
+    //noLoop();
+    loading = true;
     ga.bestNetwork.saveWeights();
     println("Saved Weights");
   }

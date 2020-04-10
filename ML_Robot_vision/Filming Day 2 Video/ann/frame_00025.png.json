@@ -1,0 +1,92 @@
+{
+    "description": "",
+    "tags": [
+        {
+            "name": "Valid",
+            "value": null,
+            "labelerLogin": "strutton1476"
+        }
+    ],
+    "size": {
+        "height": 480,
+        "width": 640
+    },
+    "objects": [
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        72,
+                        14
+                    ],
+                    [
+                        109,
+                        49
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        67,
+                        101
+                    ],
+                    [
+                        117,
+                        147
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        116,
+                        185
+                    ],
+                    [
+                        182,
+                        247
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        209,
+                        349
+                    ],
+                    [
+                        304,
+                        450
+                    ]
+                ],
+                "interior": []
+            }
+        }
+    ]
+}

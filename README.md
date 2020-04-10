@@ -20,5 +20,6 @@
   <li>astirodes</li>
   <li>Smart_Rockets</li>
   <li>HandWrittenDigits_NeuralNetwork</li>
+  <li>XOR_NeuralNetwork</li>
   <li>Insertion_Sort</li>
 </ul>

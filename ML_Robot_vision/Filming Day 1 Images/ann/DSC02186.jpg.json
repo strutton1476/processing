@@ -1,0 +1,35 @@
+{
+    "description": "",
+    "tags": [
+        {
+            "name": "Valid",
+            "value": null,
+            "labelerLogin": "strutton1476"
+        }
+    ],
+    "size": {
+        "height": 480,
+        "width": 640
+    },
+    "objects": [
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        278,
+                        194
+                    ],
+                    [
+                        413,
+                        333
+                    ]
+                ],
+                "interior": []
+            }
+        }
+    ]
+}

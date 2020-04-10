@@ -1,0 +1,92 @@
+{
+    "description": "",
+    "tags": [
+        {
+            "name": "Valid",
+            "value": null,
+            "labelerLogin": "strutton1476"
+        }
+    ],
+    "size": {
+        "height": 480,
+        "width": 640
+    },
+    "objects": [
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        458,
+                        137
+                    ],
+                    [
+                        512,
+                        192
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        359,
+                        2
+                    ],
+                    [
+                        393,
+                        37
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        274,
+                        134
+                    ],
+                    [
+                        327,
+                        186
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "description": "",
+            "labelerLogin": "strutton1476",
+            "tags": [],
+            "classTitle": "Power_Cell",
+            "points": {
+                "exterior": [
+                    [
+                        189,
+                        47
+                    ],
+                    [
+                        229,
+                        88
+                    ]
+                ],
+                "interior": []
+            }
+        }
+    ]
+}
