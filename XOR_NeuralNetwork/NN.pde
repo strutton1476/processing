@@ -7,6 +7,9 @@ class NeuralNetwork{
   private int[][] Hiddens;
   private int[] Outputs;
   private float[] weights;
+  private int[] weightsdef;
+  
+  private float learningrate =0.1;
   
   NeuralNetwork(int Input, int HiddenX, int HiddenY, int Output, boolean loading){
     
@@ -22,9 +25,11 @@ class NeuralNetwork{
       weightCount = Input*HiddenY+HiddenY*Output;
     
     weights = new float[weightCount];
+    weightsdef = new int[weightCount];
     
     initWeights(loading);
-        
+    println(weightsdef);
+    
     int y = 0;
     int Count = 0;
     
@@ -73,8 +78,22 @@ class NeuralNetwork{
     if(loading)
       weights = loadWeights(weights.length);
     else{
-      for(int i=0; i<weights.length; i++)
+      for(int i=0; i<weights.length; i++){
         weights[i] = 1;//random(-range, range);
+        
+        println("IH",Inputs.length * Hiddens[0].length);
+        println("HH",Inputs.length * Hiddens[0].length + (Hiddens.length-1) * Math.pow(Hiddens[0].length,2));
+        println("HO",Inputs.length * Hiddens[0].length + (Hiddens.length-1) * Math.pow(Hiddens[0].length,2) + Hiddens[0].length*Outputs.length);
+        if(i<=Inputs.length*Hiddens[0].length-1)
+          weightsdef[i] = 0;
+        else if(i<=Inputs.length*Hiddens[0].length)
+          weightsdef[i] = 1;
+        else if(i<=2)
+          weightsdef[i] = 2;
+        
+        //Inputs, Hiddens, Outputs
+        // Inputs * HiddenY + (HiddenX-1) * HiddenY^2 + HiddenY * Outputs  Weights!!!
+      }
     }
   }
   
@@ -111,7 +130,11 @@ class NeuralNetwork{
     
     avr/=len;
     
+    len = weights.length;
     
+    for(int i=0; i<len; i++){
+       //weights[i] += learningrate * avr * connectedValue;
+    }
   }
   
   public void saveWeights(){
